@@ -49,11 +49,6 @@ Jogo de aventura espacial com exploração intergaláctica
 - 🤖 Companheiro Robótico AX-7 - €7.99
 
 
-## 🎨 Capturas de Tela
-
-| MainActivity | GameDetailActivity | BottomSheet |
-|--------------|-------------------|-------------|
-| ![Main](screenshots/main.png) | ![Detail](screenshots/detail.png) | ![Sheet](screenshots/bottomsheet.png) |
 
 ## 📦 Entregáveis
 
