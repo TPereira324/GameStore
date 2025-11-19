@@ -16,14 +16,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
+ 
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,13 +37,14 @@ fun TelaPrincipalScreen(games: List<Game>, onGameClick: (Game) -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
+            .background(Brush.verticalGradient(listOf(Color(0xFFEF4444), Color.White)))
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         games.forEach { game ->
             GameCard(
                 title = game.title,
-                brush = Brush.linearGradient(listOf(Color(0xFF9AA5B1), Color(0xFF6B7280))),
+                brush = Brush.linearGradient(listOf(Color(0xFFFFE4E6), Color(0xFFEF4444))),
                 onClick = { onGameClick(game) }
             )
         }
@@ -65,15 +67,15 @@ fun GameCard(title: String, brush: Brush, onClick: () -> Unit) {
                 modifier = Modifier
                     .size(36.dp)
                     .clip(CircleShape)
-                    .background(Color(0xFFD1D5DB))
+                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.2f))
             )
             Spacer(modifier = Modifier.size(12.dp))
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleMedium,
-                color = Color.White,
-                fontWeight = FontWeight.SemiBold
-            )
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleMedium,
+            color = Color.Black,
+            fontWeight = FontWeight.SemiBold
+        )
         }
     }
 }

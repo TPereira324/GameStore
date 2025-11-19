@@ -1,4 +1,4 @@
-package pt.iade.ei.gamestore
+package pt.iade.ei.gamestore.view
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.History
@@ -11,16 +11,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
 import pt.iade.ei.gamestore.ui.theme.GameStoreTheme
 
 data class BottomItem(val icon: ImageVector, val label: String)
 
 private val bottomItems = listOf(
-    BottomItem(Icons.Outlined.Star, "Featured"),
-    BottomItem(Icons.Outlined.History, "History"),
-    BottomItem(Icons.Outlined.Person, "Profile")
+    BottomItem(Icons.Outlined.Star, "Tela Principal"),
+    BottomItem(Icons.Outlined.History, "Histórico"),
+    BottomItem(Icons.Outlined.Person, "Perfil")
 )
 
 @Composable
@@ -42,6 +42,8 @@ fun GameStoreBottomBar(selectedIndex: Int, onSelectedIndexChange: (Int) -> Unit)
 fun BottomBarPreview() {
     GameStoreTheme {
         val selected = remember { mutableStateOf(0) }
-        GameStoreBottomBar(selectedIndex = selected.value, onSelectedIndexChange = { selected.value = it })
+        GameStoreBottomBar(
+            selectedIndex = selected.value,
+            onSelectedIndexChange = { selected.value = it })
     }
 }
