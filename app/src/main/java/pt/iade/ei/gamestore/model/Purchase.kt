@@ -6,6 +6,7 @@ data class Purchase(
     val id: String,
     val userId: String,
     val gameId: String,
+    val itemTitle: String? = null,
     val price: Double,
     val date: LocalDateTime
 )
