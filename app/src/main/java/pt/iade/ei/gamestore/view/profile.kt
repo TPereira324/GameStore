@@ -7,8 +7,6 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,10 +16,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ChevronRight
 import androidx.compose.material.icons.outlined.CreditCard
@@ -91,207 +90,213 @@ fun ProfileScreen(
     } else null
 
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Brush.verticalGradient(listOf(Color(0xFFEF4444), Color.White)))
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Brush.verticalGradient(listOf(Color(0xFFEF4444), Color.White)))
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Card(
+            shape = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
         ) {
-            Card(
-                shape = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Box(
+                        modifier = Modifier
+                            .size(64.dp)
+                            .clip(CircleShape)
+                            .background(Color(0xFFFFE4E6))
+                            .clickable(enabled = imagePicker != null) { imagePicker?.launch("image/*") },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        if (profileBitmap != null) {
+                            Image(
+                                bitmap = profileBitmap!!.asImageBitmap(),
+                                contentDescription = null
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Outlined.Person,
+                                contentDescription = null,
+                                tint = Color.Black,
+                                modifier = Modifier.size(32.dp)
+                            )
+                        }
                         Box(
                             modifier = Modifier
-                                .size(64.dp)
+                                .align(Alignment.BottomEnd)
+                                .size(12.dp)
                                 .clip(CircleShape)
-                                .background(Color(0xFFFFE4E6))
-                                .clickable(enabled = imagePicker != null) { imagePicker?.launch("image/*") },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            if (profileBitmap != null) {
-                                Image(
-                                    bitmap = profileBitmap!!.asImageBitmap(),
-                                    contentDescription = null
-                                )
-                            } else {
-                                Icon(
-                                    imageVector = Icons.Outlined.Person,
-                                    contentDescription = null,
-                                    tint = Color.Black,
-                                    modifier = Modifier.size(32.dp)
-                                )
-                            }
-                            Box(
-                                modifier = Modifier
-                                    .align(Alignment.BottomEnd)
-                                    .size(12.dp)
-                                    .clip(CircleShape)
-                                    .background(Color(0xFF22C55E))
+                                .background(Color(0xFF22C55E))
+                        )
+                    }
+                    Spacer(modifier = Modifier.size(12.dp))
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            user?.name ?: "Utilizador",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                Icons.Outlined.Star,
+                                contentDescription = null,
+                                tint = Color(0xFFF59E0B),
+                                modifier = Modifier.size(16.dp)
                             )
-                        }
-                        Spacer(modifier = Modifier.size(12.dp))
-                        Column(modifier = Modifier.weight(1f)) {
+                            Spacer(modifier = Modifier.size(6.dp))
                             Text(
-                                user?.name ?: "Utilizador",
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold
+                                "Jogador Premium",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Color.Black
                             )
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(
-                                    Icons.Outlined.Star,
-                                    contentDescription = null,
-                                    tint = Color(0xFFF59E0B),
-                                    modifier = Modifier.size(16.dp)
-                                )
-                                Spacer(modifier = Modifier.size(6.dp))
-                                Text(
-                                    "Jogador Premium",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = Color.Black
-                                )
-                                Spacer(modifier = Modifier.size(12.dp))
-                                Text(
-                                    "Nível 47",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = Color.Black
-                                )
-                            }
+                            Spacer(modifier = Modifier.size(12.dp))
+                            Text(
+                                "Nível 47",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = Color.Black
+                            )
                         }
                     }
-                    Divider(color = Color(0xFFFFE4E6))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        StatItem(
-                            icon = Icons.Outlined.CreditCard,
-                            value = purchasesCount.toString(),
-                            label = "Compras"
-                        )
-                        StatItem(
-                            icon = Icons.Outlined.EmojiEvents,
-                            value = achievementsCount.toString(),
-                            label = "Conquistas"
-                        )
-                        StatItem(
-                            icon = Icons.Outlined.Star,
-                            value = points.toString(),
-                            label = "Pontos"
-                        )
-                    }
                 }
-            }
-
-            Card(
-                shape = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFF9FAFB))
-            ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                Divider(color = Color(0xFFFFE4E6))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Text(
-                        "Informações da Conta",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Black
-                    )
-                    ListRow(
-                        icon = Icons.Outlined.Email,
-                        iconBg = Color(0xFFFFE4E6),
-                        title = "Email",
-                        subtitle = user?.email ?: ""
-                    )
-                    ListRow(
-                        icon = Icons.Outlined.Phone,
-                        iconBg = Color(0xFFFFE4E6),
-                        title = "Telefone",
-                        subtitle = user?.phone ?: ""
-                    )
-                    ListRow(
-                        icon = Icons.Outlined.LocationOn,
-                        iconBg = Color(0xFFFFE4E6),
-                        title = "Localização",
-                        subtitle = "Lisboa, Portugal"
-                    )
-                    ListRow(
+                    StatItem(
                         icon = Icons.Outlined.CreditCard,
-                        iconBg = Color(0xFFFFE4E6),
-                        title = "Métodos de Pagamento",
-                        subtitle = "2 cartões guardados",
-                        onClick = onOpenPayments
+                        value = purchasesCount.toString(),
+                        label = "Compras"
+                    )
+                    StatItem(
+                        icon = Icons.Outlined.EmojiEvents,
+                        value = achievementsCount.toString(),
+                        label = "Conquistas"
+                    )
+                    StatItem(
+                        icon = Icons.Outlined.Star,
+                        value = points.toString(),
+                        label = "Pontos"
                     )
                 }
             }
+        }
 
-            Card(
-                shape = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFF9FAFB))
+        Card(
+            shape = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFFF9FAFB))
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Text(
-                        "Configurações",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Black
-                    )
-                    ListRow(
-                        icon = Icons.Outlined.Notifications,
-                        iconBg = Color(0xFFFFE4E6),
-                        title = "Notificações",
-                        subtitle = "Gerir notificações push",
-                        onClick = onOpenNotifications
-                    )
-                    ListRow(
-                        icon = Icons.Outlined.Security,
-                        iconBg = Color(0xFFFFE4E6),
-                        title = "Privacidade e Segurança",
-                        subtitle = "Alterar password, 2FA",
-                        onClick = onOpenPrivacy
-                    )
-                }
+                Text(
+                    "Informações da Conta",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Black
+                )
+                ListRow(
+                    icon = Icons.Outlined.Email,
+                    iconBg = Color(0xFFFFE4E6),
+                    title = "Email",
+                    subtitle = user?.email ?: ""
+                )
+                ListRow(
+                    icon = Icons.Outlined.Phone,
+                    iconBg = Color(0xFFFFE4E6),
+                    title = "Telefone",
+                    subtitle = user?.phone ?: ""
+                )
+                ListRow(
+                    icon = Icons.Outlined.LocationOn,
+                    iconBg = Color(0xFFFFE4E6),
+                    title = "Localização",
+                    subtitle = "Lisboa, Portugal"
+                )
+                ListRow(
+                    icon = Icons.Outlined.CreditCard,
+                    iconBg = Color(0xFFFFE4E6),
+                    title = "Métodos de Pagamento",
+                    subtitle = "2 cartões guardados",
+                    onClick = onOpenPayments
+                )
             }
+        }
 
-            Card(
-                shape = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        Card(
+            shape = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFFF9FAFB))
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                    Button(
-                        onClick = { onLogout?.invoke() },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFEF4444), contentColor = Color.White),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(12.dp)
-                    ) {
-                        Icon(
-                            Icons.Outlined.ExitToApp,
-                            contentDescription = null,
-                            tint = Color.White
-                        )
-                        Spacer(modifier = Modifier.size(8.dp))
-                        Text("Terminar Sessão", color = Color.White)
-                    }
-                }
+                Text(
+                    "Configurações",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Black
+                )
+                ListRow(
+                    icon = Icons.Outlined.Notifications,
+                    iconBg = Color(0xFFFFE4E6),
+                    title = "Notificações",
+                    subtitle = "Gerir notificações push",
+                    onClick = onOpenNotifications
+                )
+                ListRow(
+                    icon = Icons.Outlined.Security,
+                    iconBg = Color(0xFFFFE4E6),
+                    title = "Privacidade e Segurança",
+                    subtitle = "Alterar password, 2FA",
+                    onClick = onOpenPrivacy
+                )
             }
+        }
+
+        Card(
+            shape = androidx.compose.foundation.shape.RoundedCornerShape(24.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        ) {
+            Button(
+                onClick = { onLogout?.invoke() },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFEF4444),
+                    contentColor = Color.White
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp)
+            ) {
+                Icon(
+                    Icons.Outlined.ExitToApp,
+                    contentDescription = null,
+                    tint = Color.White
+                )
+                Spacer(modifier = Modifier.size(8.dp))
+                Text("Terminar Sessão", color = Color.White)
+            }
+        }
     }
+}
 
 
 @Composable
 fun StatItem(icon: ImageVector, value: String, label: String) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(vertical = 8.dp)) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(vertical = 8.dp)
+    ) {
         Box(
             modifier = Modifier
                 .size(36.dp)
@@ -324,7 +329,11 @@ fun InfoRow(icon: ImageVector, title: String, subtitle: String) {
         Spacer(modifier = Modifier.size(12.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(title, style = MaterialTheme.typography.bodyLarge)
-            Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+            Text(
+                subtitle,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
         }
     }
 }

@@ -68,7 +68,10 @@ fun StreetFootballDetailScreen(
                 Spacer(modifier = Modifier.height(12.dp))
                 Button(
                     onClick = { onBuy?.invoke() },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Black,
+                        contentColor = Color.White
+                    )
                 ) {
                     Text("Comprar Jogo", color = Color.White)
                 }
@@ -88,7 +91,11 @@ fun StreetFootballDetailScreen(
             items(items) { item ->
                 Card(
                     shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.08f))
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primary.copy(
+                            alpha = 0.08f
+                        )
+                    )
                 ) {
                     Row(
                         modifier = Modifier.padding(16.dp),
@@ -114,7 +121,10 @@ fun StreetFootballDetailScreen(
                         Spacer(modifier = Modifier.size(12.dp))
                         Button(
                             onClick = { onBuyItem?.invoke(item) },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Black,
+                                contentColor = Color.White
+                            )
                         ) {
                             Text(
                                 String.format("%.2f€", item.price).replace('.', ','),

@@ -37,8 +37,7 @@ import pt.iade.ei.gamestore.ui.theme.GameStoreTheme
 
 @Composable
 fun GalaxyExplorersDetailScreen(
-    onBuy: (() -> Unit)? = null,
-    onBuyItem: ((GameItem) -> Unit)? = null
+    onBuy: (() -> Unit)? = null, onBuyItem: ((GameItem) -> Unit)? = null
 ) {
     val brush = Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White))
     val vm = remember { GameDetailViewModel() }
@@ -67,10 +66,8 @@ fun GalaxyExplorersDetailScreen(
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Button(
-                    onClick = { onBuy?.invoke() },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Black,
-                        contentColor = Color.White
+                    onClick = { onBuy?.invoke() }, colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Black, contentColor = Color.White
                     )
                 ) {
                     Text("Comprar Jogo", color = Color.White)
@@ -122,8 +119,7 @@ fun GalaxyExplorersDetailScreen(
                         Button(
                             onClick = { onBuyItem?.invoke(item) },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.Black,
-                                contentColor = Color.White
+                                containerColor = Color.Black, contentColor = Color.White
                             )
                         ) {
                             Text(
