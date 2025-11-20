@@ -1,11 +1,11 @@
 package pt.iade.ei.gamestore.view
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,10 +18,16 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -34,26 +40,28 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import pt.iade.ei.gamestore.R
 import pt.iade.ei.gamestore.MainActivity
+import pt.iade.ei.gamestore.R
+import pt.iade.ei.gamestore.controller.AuthViewModel
 import pt.iade.ei.gamestore.ui.theme.GameStoreTheme
 
 // LoginActivity.kt
 class LoginActivity : ComponentActivity() {
+    @SuppressLint("ViewModelConstructorInComposable")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             GameStoreTheme {
                 LoginScreen(
+                    auth = AuthViewModel(),
                     onLoginSuccess = {
                         // Navegar para MainActivity após login bem-sucedido
                         val intent = Intent(this, MainActivity::class.java)
@@ -74,11 +82,14 @@ class LoginActivity : ComponentActivity() {
 // LoginScreen.kt
 @Composable
 fun LoginScreen(
+    auth: AuthViewModel,
     onLoginSuccess: () -> Unit,
     onNavigateToRegister: () -> Unit
 ) {
+    val context = LocalContext.current
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
+    var showPassword by remember { mutableStateOf(false) }
     val isLoading = remember { mutableStateOf(false) }
     val errorMessage = remember { mutableStateOf<String?>(null) }
 
@@ -86,6 +97,7 @@ fun LoginScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(24.dp)
+            .background(Brush.verticalGradient(listOf(Color(0xFFEF4444), Color.White)))
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -95,14 +107,22 @@ fun LoginScreen(
             painter = painterResource(id = R.mipmap.ic_launcher_foreground),
             contentDescription = "Game Store Logo",
             modifier = Modifier.size(200.dp),
-            tint = Color(0xFF2563EB)
+            tint = MaterialTheme.colorScheme.primary
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        Text(text = "Entrar", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+        Text(
+            text = "Entrar",
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.Bold
+        )
 
-        Text(text = "Entre na sua conta", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
+        Text(
+            text = "Entre na sua conta",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface
+        )
 
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -132,8 +152,16 @@ fun LoginScreen(
                 Icon(Icons.Filled.Lock, contentDescription = "Senha")
             },
             modifier = Modifier.fillMaxWidth(),
-            visualTransformation = PasswordVisualTransformation(),
+            visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            trailingIcon = {
+                androidx.compose.material3.IconButton(onClick = { showPassword = !showPassword }) {
+                    Icon(
+                        imageVector = if (showPassword) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
+                        contentDescription = if (showPassword) "Ocultar senha" else "Mostrar senha"
+                    )
+                }
+            },
             isError = errorMessage.value != null
         )
 
@@ -156,15 +184,10 @@ fun LoginScreen(
                 if (validateLogin(email.value, password.value)) {
                     isLoading.value = true
                     errorMessage.value = null
-
-                    // Simular chamada de API
-                    simulateLogin(email.value, password.value) { success ->
+                    auth.login(context, email.value, password.value) { success ->
                         isLoading.value = false
-                        if (success) {
-                            onLoginSuccess()
-                        } else {
-                            errorMessage.value = "Email ou senha incorretos"
-                        }
+                        if (success) onLoginSuccess() else errorMessage.value =
+                            "Email ou senha incorretos"
                     }
                 } else {
                     errorMessage.value = "Por favor, preencha todos os campos"
@@ -173,15 +196,19 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
-            enabled = !isLoading.value
+            enabled = !isLoading.value,
+            colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFEF4444),
+                contentColor = Color.White
+            )
         ) {
             if (isLoading.value) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(20.dp),
-                    color = MaterialTheme.colorScheme.onPrimary
+                    color = Color.White
                 )
             } else {
-                Text("Entrar", style = MaterialTheme.typography.labelLarge)
+                Text("Entrar", style = MaterialTheme.typography.labelLarge, color = Color.White)
             }
         }
 
@@ -196,7 +223,7 @@ fun LoginScreen(
             Text(
                 text = "ou",
                 modifier = Modifier.padding(horizontal = 16.dp),
-                color = Color.Gray
+                color = MaterialTheme.colorScheme.onSurface
             )
             Divider(modifier = Modifier.weight(1f))
         }
@@ -216,25 +243,14 @@ private fun validateLogin(email: String, password: String): Boolean {
 }
 
 // Simulação de login (substituir por chamada real posteriormente)
-private fun simulateLogin(email: String, password: String, callback: (Boolean) -> Unit) {
-    // Simular delay de rede
-    Handler(Looper.getMainLooper()).postDelayed({
-        // Usuários de exemplo para teste
-        val validUsers = listOf(
-            "user@email.com" to "password123",
-            "test@test.com" to "test123",
-            "admin@admin.com" to "admin123"
-        )
-
-        val isValid = validUsers.any { it.first == email && it.second == password }
-        callback(isValid)
-    }, 1500)
-}
+// Integra com AuthViewModel.login
+@SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
     GameStoreTheme {
         LoginScreen(
+            auth = AuthViewModel(),
             onLoginSuccess = { },
             onNavigateToRegister = { }
         )
