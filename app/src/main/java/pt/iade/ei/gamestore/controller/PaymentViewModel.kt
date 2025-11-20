@@ -5,35 +5,23 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import pt.iade.ei.gamestore.model.PaymentMethod
 
-class PaymentViewModel : ViewModel() {
-    val methods: SnapshotStateList<PaymentMethod> = mutableStateListOf(
-        PaymentMethod(
-            id = "pm1",
-            brand = "Visa",
-            last4 = "1234",
-            expiryMonth = 8,
-            expiryYear = 2026,
-            isDefault = true
-        ),
-        PaymentMethod(
-            id = "pm2",
-            brand = "Mastercard",
-            last4 = "5678",
-            expiryMonth = 11,
-            expiryYear = 2027,
-            isDefault = false
-        )
-    )
+class PaymentViewModel(
+    private val repo: PaymentsRepository = LocalPaymentsRepository()
+) : ViewModel() {
+    val methods: SnapshotStateList<PaymentMethod> = mutableStateListOf(*repo.list().toTypedArray())
 
     fun add(method: PaymentMethod) {
+        repo.add(method)
         methods.add(method)
     }
 
     fun remove(id: String) {
+        repo.remove(id)
         methods.removeAll { it.id == id }
     }
 
     fun setDefault(id: String) {
+        repo.setDefault(id)
         for (i in methods.indices) {
             val m = methods[i]
             methods[i] = m.copy(isDefault = m.id == id)

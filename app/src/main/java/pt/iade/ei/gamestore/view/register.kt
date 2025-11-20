@@ -225,15 +225,19 @@ fun RegisterScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
-            enabled = !isLoading.value
+            enabled = !isLoading.value,
+            colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                containerColor = Color(0xFFEF4444),
+                contentColor = Color.White
+            )
         ) {
             if (isLoading.value) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(20.dp),
-                    color = MaterialTheme.colorScheme.onPrimary
+                    color = Color.White
                 )
             } else {
-                Text("Cadastrar", style = MaterialTheme.typography.labelLarge)
+                Text("Cadastrar", style = MaterialTheme.typography.labelLarge, color = Color.White)
             }
         }
 

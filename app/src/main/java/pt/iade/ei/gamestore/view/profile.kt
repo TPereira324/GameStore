@@ -94,6 +94,7 @@ fun ProfileScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(Brush.verticalGradient(listOf(Color(0xFFEF4444), Color.White)))
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -112,7 +113,7 @@ fun ProfileScreen(
                             modifier = Modifier
                                 .size(64.dp)
                                 .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.15f))
+                                .background(Color(0xFFFFE4E6))
                                 .clickable(enabled = imagePicker != null) { imagePicker?.launch("image/*") },
                             contentAlignment = Alignment.Center
                         ) {
@@ -125,7 +126,7 @@ fun ProfileScreen(
                                 Icon(
                                     imageVector = Icons.Outlined.Person,
                                     contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary,
+                                    tint = Color.Black,
                                     modifier = Modifier.size(32.dp)
                                 )
                             }
@@ -155,18 +156,18 @@ fun ProfileScreen(
                                 Text(
                                     "Jogador Premium",
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurface
+                                    color = Color.Black
                                 )
                                 Spacer(modifier = Modifier.size(12.dp))
                                 Text(
                                     "Nível 47",
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurface
+                                    color = Color.Black
                                 )
                             }
                         }
                     }
-                    Divider(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f))
+                    Divider(color = Color(0xFFFFE4E6))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly
@@ -201,29 +202,30 @@ fun ProfileScreen(
                     Text(
                         "Informações da Conta",
                         style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black
                     )
                     ListRow(
                         icon = Icons.Outlined.Email,
-                        iconBg = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
+                        iconBg = Color(0xFFFFE4E6),
                         title = "Email",
                         subtitle = user?.email ?: ""
                     )
                     ListRow(
                         icon = Icons.Outlined.Phone,
-                        iconBg = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
+                        iconBg = Color(0xFFFFE4E6),
                         title = "Telefone",
                         subtitle = user?.phone ?: ""
                     )
                     ListRow(
                         icon = Icons.Outlined.LocationOn,
-                        iconBg = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
+                        iconBg = Color(0xFFFFE4E6),
                         title = "Localização",
                         subtitle = "Lisboa, Portugal"
                     )
                     ListRow(
                         icon = Icons.Outlined.CreditCard,
-                        iconBg = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
+                        iconBg = Color(0xFFFFE4E6),
                         title = "Métodos de Pagamento",
                         subtitle = "2 cartões guardados",
                         onClick = onOpenPayments
@@ -242,18 +244,19 @@ fun ProfileScreen(
                     Text(
                         "Configurações",
                         style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black
                     )
                     ListRow(
                         icon = Icons.Outlined.Notifications,
-                        iconBg = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
+                        iconBg = Color(0xFFFFE4E6),
                         title = "Notificações",
                         subtitle = "Gerir notificações push",
                         onClick = onOpenNotifications
                     )
                     ListRow(
                         icon = Icons.Outlined.Security,
-                        iconBg = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
+                        iconBg = Color(0xFFFFE4E6),
                         title = "Privacidade e Segurança",
                         subtitle = "Alterar password, 2FA",
                         onClick = onOpenPrivacy
@@ -268,7 +271,7 @@ fun ProfileScreen(
             ) {
                     Button(
                         onClick = { onLogout?.invoke() },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFE4E6)),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFEF4444), contentColor = Color.White),
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(12.dp)
@@ -276,10 +279,10 @@ fun ProfileScreen(
                         Icon(
                             Icons.Outlined.ExitToApp,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary
+                            tint = Color.White
                         )
                         Spacer(modifier = Modifier.size(8.dp))
-                        Text("Terminar Sessão", color = MaterialTheme.colorScheme.primary)
+                        Text("Terminar Sessão", color = Color.White)
                     }
                 }
             }
@@ -293,14 +296,14 @@ fun StatItem(icon: ImageVector, value: String, label: String) {
             modifier = Modifier
                 .size(36.dp)
                 .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)),
+                .background(Color(0xFFFFE4E6)),
             contentAlignment = Alignment.Center
         ) {
-            Icon(imageVector = icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+            Icon(imageVector = icon, contentDescription = null, tint = Color.Black)
         }
         Spacer(modifier = Modifier.size(6.dp))
         Text(value, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-        Text(label, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurface)
+        Text(label, style = MaterialTheme.typography.bodySmall, color = Color.Black)
     }
 }
 
@@ -367,17 +370,17 @@ fun ListRow(
                 .background(iconBg),
             contentAlignment = Alignment.Center
         ) {
-            Icon(imageVector = icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+            Icon(imageVector = icon, contentDescription = null, tint = Color.Black)
         }
         Spacer(modifier = Modifier.size(12.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(title, style = MaterialTheme.typography.bodyLarge)
-            Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+            Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = Color.Black)
         }
         Icon(
             imageVector = Icons.Outlined.ChevronRight,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary
+            tint = Color.Black
         )
     }
 }
