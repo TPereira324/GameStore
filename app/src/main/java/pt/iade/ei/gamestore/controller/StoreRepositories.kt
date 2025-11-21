@@ -12,7 +12,7 @@ interface StoreRepository {
     fun clearPurchases()
 }
 
-class LocalStoreRepository : StoreRepository {
+object LocalStoreRepository : StoreRepository {
     private val games = mutableListOf(
         Game(id = "g1", title = "Street Football", imageUrl = null, price = 9.99, featured = true),
         Game(id = "g2", title = "Galaxy Explorers", imageUrl = null, price = 14.99, featured = true)

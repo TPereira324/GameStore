@@ -7,7 +7,7 @@ import pt.iade.ei.gamestore.model.Game
 import pt.iade.ei.gamestore.model.Purchase
 
 class StoreViewModel(
-    private val repo: StoreRepository = LocalStoreRepository()
+    private val repo: StoreRepository = LocalStoreRepository
 ) : ViewModel() {
     val games: SnapshotStateList<Game> = mutableStateListOf(*repo.getGames().toTypedArray())
 
