@@ -122,22 +122,7 @@ fun HistoryScreenPreview() {
     GameStoreTheme {
         HistoryScreen(
             purchases = listOf(
-                Purchase(
-                    id = "p1",
-                    userId = "1",
-                    gameId = "g2",
-                    itemTitle = "Nave Millennium X1",
-                    price = 15.99,
-                    date = LocalDateTime.now().minusHours(2)
-                ),
-                Purchase(
-                    id = "p2",
-                    userId = "1",
-                    gameId = "g1",
-                    itemTitle = "Estádio Noturno Iluminado",
-                    price = 11.99,
-                    date = LocalDateTime.now().minusHours(5)
-                ),
+                
                 Purchase(
                     id = "p3",
                     userId = "1",
