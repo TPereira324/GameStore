@@ -3,27 +3,29 @@ package pt.iade.ei.gamestore.controller
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
-import java.time.LocalDateTime
 import pt.iade.ei.gamestore.model.Game
 import pt.iade.ei.gamestore.model.Purchase
 
-class StoreViewModel : ViewModel() {
-    val games: SnapshotStateList<Game> = mutableStateListOf(
-        Game(id = "g1", title = "Street Football", imageUrl = null, price = 9.99, featured = true),
-        Game(id = "g2", title = "Galaxy Explorers", imageUrl = null, price = 14.99, featured = true)
-    )
+class StoreViewModel(
+    private val repo: StoreRepository = LocalStoreRepository
+) : ViewModel() {
+    val games: SnapshotStateList<Game> = mutableStateListOf(*repo.getGames().toTypedArray())
 
-    val purchases: SnapshotStateList<Purchase> = mutableStateListOf()
+    val purchases: SnapshotStateList<Purchase> =
+        mutableStateListOf(*repo.getPurchases().toTypedArray())
 
     fun addPurchase(userId: String, game: Game) {
-        purchases.add(
-            Purchase(
-                id = "p" + (purchases.size + 1),
-                userId = userId,
-                gameId = game.id,
-                price = game.price,
-                date = LocalDateTime.now()
-            )
-        )
+        val p = repo.addPurchase(userId, game)
+        purchases.add(p)
+    }
+
+    fun addPurchaseItem(userId: String, game: Game, itemTitle: String, price: Double) {
+        val p = repo.addPurchaseItem(userId, game, itemTitle, price)
+        purchases.add(p)
+    }
+
+    fun clearPurchases() {
+        repo.clearPurchases()
+        purchases.clear()
     }
 }

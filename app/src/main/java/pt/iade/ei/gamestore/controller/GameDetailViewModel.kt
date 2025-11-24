@@ -1,20 +1,21 @@
 package pt.iade.ei.gamestore.controller
 
 import androidx.lifecycle.ViewModel
+import pt.iade.ei.gamestore.R
+import pt.iade.ei.gamestore.model.Game
 import pt.iade.ei.gamestore.model.GameItem
 
-class GameDetailViewModel : ViewModel() {
-    fun itemsForStreetFootball(): List<GameItem> = listOf(
-        GameItem("Pacote de Celebrações", "10 celebrações exclusivas após o gol", 4.99),
-        GameItem("Bola de Ouro Lendária", "Bola banhada a ouro com efeitos", 6.99),
-        GameItem("Camisa Legendária Brasil", "Design exclusivo da seleção brasileira", 9.99),
-        GameItem("Estádio Noturno Iluminado", "Iluminação espetacular e arquibancadas", 11.99)
-    )
+class GameDetailViewModel(
+    private val repo: GameItemRepository = LocalGameItemRepository()
+) : ViewModel() {
+    fun itemsForStreetFootball(): List<GameItem> = repo.itemsForStreetFootball()
+    fun itemsForGalaxyExplorers(): List<GameItem> = repo.itemsForGalaxyExplorers()
 
-    fun itemsForGalaxyExplorers(): List<GameItem> = listOf(
-        GameItem("Companheiro Robótico AX-7", "Assistente robótico para exploração", 7.99),
-        GameItem("Traje Espacial Quantum", "Proteção avançada com resistência à radiação", 8.99),
-        GameItem("Expansão: Fronteira Alien", "Sistema estelar com planetas inexplorados", 12.99),
-        GameItem("Nave Millennium X1", "Nave premium com hiperpropulsão", 15.99)
-    )
+    fun imageResForGame(game: Game): Int {
+        return when (game.title) {
+            "Street Football" -> R.drawable.estadio_noturno
+            "Galaxy Explorers" -> R.drawable.galaxia
+            else -> R.mipmap.ic_launcher_foreground
+        }
+    }
 }

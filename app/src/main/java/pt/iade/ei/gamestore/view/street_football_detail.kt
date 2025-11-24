@@ -1,5 +1,6 @@
 package pt.iade.ei.gamestore.view
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,7 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -27,6 +28,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -68,7 +71,10 @@ fun StreetFootballDetailScreen(
                 Spacer(modifier = Modifier.height(12.dp))
                 Button(
                     onClick = { onBuy?.invoke() },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Black,
+                        contentColor = Color.White
+                    )
                 ) {
                     Text("Comprar Jogo", color = Color.White)
                 }
@@ -85,10 +91,14 @@ fun StreetFootballDetailScreen(
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            items(items) { item ->
+            itemsIndexed(items) { index, item ->
                 Card(
                     shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.08f))
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primary.copy(
+                            alpha = 0.08f
+                        )
+                    )
                 ) {
                     Row(
                         modifier = Modifier.padding(16.dp),
@@ -98,8 +108,14 @@ fun StreetFootballDetailScreen(
                             modifier = Modifier
                                 .size(48.dp)
                                 .clip(androidx.compose.foundation.shape.RoundedCornerShape(8.dp))
-                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.2f))
-                        )
+                        ) {
+                            Image(
+                                painter = painterResource(id = streetItemImageRes(index)),
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
                         Spacer(modifier = Modifier.size(12.dp))
                         Column(modifier = Modifier.weight(1f)) {
                             Text(item.title, style = MaterialTheme.typography.titleMedium)
@@ -114,7 +130,10 @@ fun StreetFootballDetailScreen(
                         Spacer(modifier = Modifier.size(12.dp))
                         Button(
                             onClick = { onBuyItem?.invoke(item) },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Black, contentColor = Color.White)
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Black,
+                                contentColor = Color.White
+                            )
                         ) {
                             Text(
                                 String.format("%.2f€", item.price).replace('.', ','),
@@ -132,4 +151,13 @@ fun StreetFootballDetailScreen(
 @Composable
 fun StreetFootballDetailPreview() {
     GameStoreTheme { StreetFootballDetailScreen() }
+}
+
+private fun streetItemImageRes(index: Int): Int {
+    return when (index) {
+        0 -> pt.iade.ei.gamestore.R.drawable.celebrator
+        1 -> pt.iade.ei.gamestore.R.drawable.estadio_noturno
+        2 -> pt.iade.ei.gamestore.R.drawable.camisa_do_brasil
+        else -> pt.iade.ei.gamestore.R.drawable.celebrator
+    }
 }

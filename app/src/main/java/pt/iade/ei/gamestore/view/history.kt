@@ -1,7 +1,6 @@
 package pt.iade.ei.gamestore.view
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,27 +13,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Inventory2
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pt.iade.ei.gamestore.model.Game
@@ -60,7 +50,11 @@ fun HistoryScreen(purchases: List<Purchase>, games: List<Game>, onClear: (() -> 
                     .fillMaxWidth()
                     .padding(12.dp)
             ) {
-                Text("Total", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                Text(
+                    "Total",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
                 Spacer(modifier = Modifier.weight(1f))
                 Text(
                     formatPrice(total),
@@ -72,8 +66,16 @@ fun HistoryScreen(purchases: List<Purchase>, games: List<Game>, onClear: (() -> 
         Spacer(modifier = Modifier.height(12.dp))
         if (purchases.isEmpty()) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                    Icon(imageVector = Icons.Outlined.Inventory2, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(48.dp))
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Inventory2,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(48.dp)
+                    )
                     Spacer(modifier = Modifier.height(12.dp))
                     Text("Nenhuma compra ainda", style = MaterialTheme.typography.titleMedium)
                 }
@@ -83,13 +85,29 @@ fun HistoryScreen(purchases: List<Purchase>, games: List<Game>, onClear: (() -> 
             LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 items(listToShow) { p ->
                     val game = games.firstOrNull { it.id == p.gameId }
-                    Card(shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = Color.White)) {
-                        Row(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                    Card(
+                        shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color.White)
+                    ) {
+                        Row(modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text(p.itemTitle ?: (game?.title ?: p.gameId), style = MaterialTheme.typography.titleMedium)
-                                Text(formatTime(p.date), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurface)
+                                Text(
+                                    p.itemTitle ?: (game?.title ?: p.gameId),
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                Text(
+                                    formatTime(p.date),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
                             }
-                            Text(formatPrice(p.price), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                            Text(
+                                formatPrice(p.price),
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.primary
+                            )
                         }
                     }
                 }
@@ -104,22 +122,7 @@ fun HistoryScreenPreview() {
     GameStoreTheme {
         HistoryScreen(
             purchases = listOf(
-                Purchase(
-                    id = "p1",
-                    userId = "1",
-                    gameId = "g2",
-                    itemTitle = "Nave Millennium X1",
-                    price = 15.99,
-                    date = LocalDateTime.now().minusHours(2)
-                ),
-                Purchase(
-                    id = "p2",
-                    userId = "1",
-                    gameId = "g1",
-                    itemTitle = "Estádio Noturno Iluminado",
-                    price = 11.99,
-                    date = LocalDateTime.now().minusHours(5)
-                ),
+                
                 Purchase(
                     id = "p3",
                     userId = "1",

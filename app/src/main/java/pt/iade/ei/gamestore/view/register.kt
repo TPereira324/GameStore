@@ -17,8 +17,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -40,19 +38,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pt.iade.ei.gamestore.R
 import pt.iade.ei.gamestore.controller.AuthViewModel
 import pt.iade.ei.gamestore.ui.theme.GameStoreTheme
-
-// RegisterActivity.kt
 class RegisterActivity : ComponentActivity() {
     @SuppressLint("ViewModelConstructorInComposable")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,14 +60,12 @@ class RegisterActivity : ComponentActivity() {
                 RegisterScreen(
                     auth = AuthViewModel(),
                     onRegisterSuccess = {
-                        // Voltar para Login após registro bem-sucedido
                         val intent = Intent(this, LoginActivity::class.java)
                         intent.putExtra("REGISTER_SUCCESS", true)
                         startActivity(intent)
                         finish()
                     },
                     onNavigateToLogin = {
-                        // Voltar para Login
                         finish()
                     }
                 )
@@ -78,7 +74,6 @@ class RegisterActivity : ComponentActivity() {
     }
 }
 
-// RegisterScreen.kt
 @Composable
 fun RegisterScreen(
     auth: AuthViewModel,
@@ -103,7 +98,6 @@ fun RegisterScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // Logo
         Icon(
             painter = painterResource(id = R.mipmap.ic_launcher_foreground),
             contentDescription = "Game Store Logo",
@@ -152,7 +146,6 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        // Campo de Email
         OutlinedTextField(
             value = email.value,
             onValueChange = { email.value = it },
@@ -168,7 +161,6 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        // Campo de Senha
         OutlinedTextField(
             value = password.value,
             onValueChange = { password.value = it },
@@ -191,7 +183,6 @@ fun RegisterScreen(
             isError = errorMessage.value != null
         )
 
-        // Mensagem de erro
         if (errorMessage.value != null) {
             Text(
                 text = errorMessage.value!!,
@@ -204,7 +195,6 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Botão de Registro
         Button(
             onClick = {
                 if (validateRegister(name.value, phone.value, email.value, password.value)) {
@@ -243,14 +233,12 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Link para Login
         TextButton(onClick = onNavigateToLogin) {
             Text("Já tem uma conta? Entre aqui")
         }
     }
 }
 
-// Funções de validação para registro
 private fun validateRegister(
     name: String,
     phone: String,
@@ -263,8 +251,6 @@ private fun validateRegister(
             password.length >= 6
 }
 
-// Simulação de registro
-// Integra com AuthViewModel.register
 @SuppressLint("ViewModelConstructorInComposable")
 @Preview(showBackground = true)
 @Composable

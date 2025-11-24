@@ -1,11 +1,14 @@
 package pt.iade.ei.gamestore.controller
 
+import android.content.Context
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import pt.iade.ei.gamestore.model.User
 
-class AuthViewModel : ViewModel() {
+class AuthViewModel(
+    private val repo: AuthRepository = LocalAuthRepository()
+) : ViewModel() {
     private val _loading = mutableStateOf(false)
     val loading: State<Boolean> get() = _loading
 
@@ -15,23 +18,13 @@ class AuthViewModel : ViewModel() {
     private val _currentUser = mutableStateOf<User?>(null)
     val currentUser: State<User?> get() = _currentUser
 
-    fun login(email: String, password: String, callback: (Boolean) -> Unit) {
+    fun login(context: Context, email: String, password: String, callback: (Boolean) -> Unit) {
         _loading.value = true
         _error.value = null
-        val valid = listOf(
-            "user@email.com" to "password123",
-            "test@test.com" to "test123",
-            "admin@admin.com" to "admin123"
-        ).any { it.first == email && it.second == password }
+        val user = repo.login(context, email, password)
         _loading.value = false
-        if (valid) {
-            _currentUser.value = User(
-                id = "1",
-                name = "José Silva",
-                phone = "+351 912 345 678",
-                email = email,
-                password = password
-            )
+        if (user != null) {
+            _currentUser.value = user
             callback(true)
         } else {
             _error.value = "Email ou senha incorretos"
@@ -39,23 +32,35 @@ class AuthViewModel : ViewModel() {
         }
     }
 
-    fun register(name: String, phone: String, email: String, password: String, callback: (Boolean, String) -> Unit) {
+    fun register(
+        context: Context,
+        name: String,
+        phone: String,
+        email: String,
+        password: String,
+        callback: (Boolean, String) -> Unit
+    ) {
         _loading.value = true
         _error.value = null
-        val exists = listOf("existing@email.com", "test@test.com").contains(email)
+        val (user, error) = repo.register(context, name, phone, email, password)
         _loading.value = false
-        if (exists) {
-            _error.value = "Este email já está em uso"
-            callback(false, "Este email já está em uso")
+        if (user == null) {
+            _error.value = error
+            callback(false, error ?: "Erro")
         } else {
-            _currentUser.value = User(
-                id = "2",
-                name = name,
-                phone = phone,
-                email = email,
-                password = password
-            )
+            _currentUser.value = user
             callback(true, "Registro bem-sucedido")
         }
     }
+
+    fun logout(context: Context) {
+        repo.logout(context)
+        _currentUser.value = null
+    }
+
+    fun restore(context: Context) {
+        _currentUser.value = repo.restore(context)
+    }
+
+
 }

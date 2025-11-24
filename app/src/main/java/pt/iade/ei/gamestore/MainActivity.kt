@@ -9,6 +9,8 @@ import pt.iade.ei.gamestore.view.MainNavigation
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { GameStoreTheme { MainNavigation() } }
+        val screen = intent?.getStringExtra("screen")
+        val gameId = intent?.getStringExtra("gameId")
+        setContent { GameStoreTheme { MainNavigation(screen = screen, gameId = gameId) } }
     }
 }
