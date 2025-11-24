@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Inventory2
+import androidx.compose.material.icons.outlined.History
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -71,7 +71,7 @@ fun HistoryScreen(purchases: List<Purchase>, games: List<Game>, onClear: (() -> 
                     verticalArrangement = Arrangement.Center
                 ) {
                     Icon(
-                        imageVector = Icons.Outlined.Inventory2,
+                        imageVector = Icons.Outlined.History,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(48.dp)
@@ -89,9 +89,11 @@ fun HistoryScreen(purchases: List<Purchase>, games: List<Game>, onClear: (() -> 
                         shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
                         colors = CardDefaults.cardColors(containerColor = Color.White)
                     ) {
-                        Row(modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        ) {
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
                                     p.itemTitle ?: (game?.title ?: p.gameId),
@@ -122,7 +124,7 @@ fun HistoryScreenPreview() {
     GameStoreTheme {
         HistoryScreen(
             purchases = listOf(
-                
+
                 Purchase(
                     id = "p3",
                     userId = "1",
@@ -141,14 +143,14 @@ fun HistoryScreenPreview() {
                 )
             ),
             games = listOf(
-                pt.iade.ei.gamestore.model.Game(
+                Game(
                     id = "g1",
                     title = "Street Football",
                     imageUrl = null,
                     price = 9.99,
                     featured = true
                 ),
-                pt.iade.ei.gamestore.model.Game(
+                Game(
                     id = "g2",
                     title = "Galaxy Explorers",
                     imageUrl = null,

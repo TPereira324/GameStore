@@ -1,9 +1,9 @@
 package pt.iade.ei.gamestore.controller
 
 import androidx.lifecycle.ViewModel
-import pt.iade.ei.gamestore.R
 import pt.iade.ei.gamestore.model.Game
 import pt.iade.ei.gamestore.model.GameItem
+import pt.iade.ei.myapplication.R
 
 class GameDetailViewModel(
     private val repo: GameItemRepository = LocalGameItemRepository()

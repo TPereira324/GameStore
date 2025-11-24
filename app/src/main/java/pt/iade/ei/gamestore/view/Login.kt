@@ -52,6 +52,7 @@ import pt.iade.ei.gamestore.MainActivity
 import pt.iade.ei.gamestore.R
 import pt.iade.ei.gamestore.controller.AuthViewModel
 import pt.iade.ei.gamestore.ui.theme.GameStoreTheme
+
 class LoginActivity : ComponentActivity() {
     @SuppressLint("ViewModelConstructorInComposable")
     override fun onCreate(savedInstanceState: Bundle?) {

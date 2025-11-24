@@ -31,7 +31,6 @@ import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Phone
-import androidx.compose.material.icons.outlined.Security
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -71,7 +70,7 @@ fun ProfileScreen(
     onLogout: (() -> Unit)? = null,
     onOpenPayments: (() -> Unit)? = null,
     onOpenNotifications: (() -> Unit)? = null,
-    onOpenPrivacy: (() -> Unit)? = null
+    
 ) {
     val context = LocalContext.current
     val isPreview = LocalInspectionMode.current
@@ -253,13 +252,7 @@ fun ProfileScreen(
                     subtitle = "Gerir notificações push",
                     onClick = onOpenNotifications
                 )
-                ListRow(
-                    icon = Icons.Outlined.Security,
-                    iconBg = Color(0xFFFFE4E6),
-                    title = "Privacidade e Segurança",
-                    subtitle = "Alterar password, 2FA",
-                    onClick = onOpenPrivacy
-                )
+                
             }
         }
 

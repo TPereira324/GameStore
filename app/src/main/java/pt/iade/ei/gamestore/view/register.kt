@@ -51,6 +51,7 @@ import androidx.compose.ui.unit.dp
 import pt.iade.ei.gamestore.R
 import pt.iade.ei.gamestore.controller.AuthViewModel
 import pt.iade.ei.gamestore.ui.theme.GameStoreTheme
+
 class RegisterActivity : ComponentActivity() {
     @SuppressLint("ViewModelConstructorInComposable")
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,7 +1,6 @@
 package pt.iade.ei.gamestore.view
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.History
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Icon
@@ -19,9 +18,10 @@ import pt.iade.ei.gamestore.ui.theme.GameStoreTheme
 
 data class BottomItem(val icon: ImageVector, val label: String)
 
+
 private val bottomItems = listOf(
     BottomItem(Icons.Outlined.Star, "Tela Principal"),
-    BottomItem(Icons.Outlined.History, "Histórico"),
+    BottomItem(Icons.Outlined.Star, "Histórico"),
     BottomItem(Icons.Outlined.Person, "Perfil")
 )
 

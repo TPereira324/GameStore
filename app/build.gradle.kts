@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "pt.iade.ei.gamestore"
+    namespace = "pt.iade.ei.myapplication"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "pt.iade.ei.gamestore"
+        applicationId = "pt.iade.ei.myapplication"
         minSdk = 30
         targetSdk = 36
         versionCode = 1
@@ -43,25 +43,12 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.navigation.compose.v284)
-    implementation(libs.gson)
-    implementation(libs.androidx.compose.material.icons.extended)
-    implementation(libs.androidx.compose.foundation)
-    implementation(libs.androidx.compose.foundation.layout)
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.runtime.livedata)
-    implementation(libs.androidx.lifecycle.runtime.ktx.v261)
-    implementation(libs.androidx.lifecycle.viewmodel.compose.v261)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
