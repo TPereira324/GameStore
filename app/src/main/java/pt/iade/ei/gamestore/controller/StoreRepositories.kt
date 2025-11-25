@@ -54,25 +54,3 @@ object LocalStoreRepository : StoreRepository {
     }
 }
 
-interface StoreApi {
-    fun getGames(): List<Game>
-    fun getPurchases(): List<Purchase>
-    fun addPurchase(userId: String, gameId: String): Purchase
-    fun addPurchaseItem(userId: String, gameId: String, itemTitle: String, price: Double): Purchase
-    fun clearPurchases()
-}
-
-class RemoteStoreRepository(private val api: StoreApi) : StoreRepository {
-    override fun getGames(): List<Game> = api.getGames()
-    override fun getPurchases(): List<Purchase> = api.getPurchases()
-    override fun addPurchase(userId: String, game: Game): Purchase =
-        api.addPurchase(userId, game.id)
-
-    override fun addPurchaseItem(
-        userId: String, game: Game, itemTitle: String, price: Double
-    ): Purchase = api.addPurchaseItem(userId, game.id, itemTitle, price)
-
-    override fun clearPurchases() {
-        api.clearPurchases()
-    }
-}

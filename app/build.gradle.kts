@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "pt.iade.ei.myapplication"
+    namespace = "pt.iade.ei.gamestore"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "pt.iade.ei.myapplication"
+        applicationId = "pt.iade.ei.gamestore"
         minSdk = 30
         targetSdk = 36
         versionCode = 1
