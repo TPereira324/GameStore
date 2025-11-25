@@ -29,18 +29,6 @@ fun MainNavigation(screen: String? = null, gameId: String? = null) {
     }
 
     Scaffold(
-        topBar = {
-            val title = when (routeState.value) {
-                "detail" -> store.games.firstOrNull { it.id == gameId }?.title ?: "Detalhe"
-                else -> "Tela Principal"
-            }
-            val showBack = routeState.value !in listOf("tela_principal")
-            GameStoreTopBar(
-                title = title,
-                showBack = showBack,
-                onBack = { (context as? android.app.Activity)?.finish() }
-            )
-        },
         bottomBar = {
             run {
                 val selectedIndex = 0

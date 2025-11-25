@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,9 +24,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,11 +47,11 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
     val vm = remember { GameDetailViewModel() }
     val items = vm.itemsForGalaxyExplorers()
     val selectedItem = remember { mutableStateOf<GameItem?>(null) }
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
     ) {
         val activity = (LocalContext.current as? android.app.Activity)
@@ -136,18 +135,35 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
             }
         }
         if (selectedItem.value != null) {
-            ModalBottomSheet(
-                onDismissRequest = { selectedItem.value = null },
-                sheetState = sheetState
+            val item = selectedItem.value!!
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
             ) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
-                    val item = selectedItem.value!!
-                    Text(item.title, style = MaterialTheme.typography.titleMedium)
-                    Text(item.description, style = MaterialTheme.typography.bodyMedium)
+                    IconButton(onClick = { selectedItem.value = null }) {
+                        Icon(
+                            imageVector = Icons.Outlined.ArrowBack,
+                            contentDescription = null,
+                            tint = Color.Black
+                        )
+                    }
+                    Text(
+                        item.title,
+                        style = MaterialTheme.typography.titleLarge,
+                        color = Color.Black
+                    )
+                    Spacer(modifier = Modifier.size(8.dp))
+                    Text(
+                        item.description,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.Black
+                    )
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
