@@ -79,7 +79,7 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                     color = Color.Black
                 )
                 Text(
-                    "Embarque numa jornada épica através da galáxia!",
+                    "Aventura espacial com exploração intergaláctica",
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.Black,
                     maxLines = 2,

@@ -79,7 +79,7 @@ fun StreetFootballDetailScreen(onBuyItem: (GameItem) -> Unit) {
                     color = Color.Black
                 )
                 Text(
-                    "Experimente o futebol de rua autêntico em ambientes urbanos vibrantes.",
+                    "Futebol de rua com ambientação urbana vibrante.",
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.Black,
                     maxLines = 2,
