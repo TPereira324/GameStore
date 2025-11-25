@@ -49,15 +49,6 @@ Jogo de aventura espacial com exploração intergaláctica
 - 🤖 Companheiro Robótico AX-7 - €7.99
 
 
-
-## 📦 Entregáveis
-
-- [x] **Projeto Android Studio** (ZIP completo)
-- [x] **APK** para execução no emulador
-- [x] **Repositório GitHub** com código fonte
-- [x] **Screenshots** de todas as Activities
-- [x] **Composable Previews** implementadas
-
 ## 👨‍💻 Padrões Implementados
 
 - **MVC (Model-View-Controller)**
