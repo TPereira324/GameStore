@@ -151,7 +151,7 @@ fun LoginScreen(
             trailingIcon = {
                 androidx.compose.material3.IconButton(onClick = { showPassword = !showPassword }) {
                     Icon(
-                        imageVector = if (showPassword) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
+                        imageVector = if (showPassword) Icons.Filled.Visibility else TODO(),
                         contentDescription = if (showPassword) "Ocultar senha" else "Mostrar senha"
                     )
                 }
