@@ -2,29 +2,29 @@ package pt.iade.ei.gamestore.view
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -50,9 +50,11 @@ fun StreetFootballDetailScreen(onBuyItem: (GameItem) -> Unit) {
     val selectedItem = remember { mutableStateOf<GameItem?>(null) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
+    ) {
         val activity = (LocalContext.current as? android.app.Activity)
         Box(
             modifier = Modifier
@@ -61,11 +63,22 @@ fun StreetFootballDetailScreen(onBuyItem: (GameItem) -> Unit) {
                 .padding(start = 16.dp, end = 16.dp, top = 56.dp)
                 .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
         ) {
-            IconButton(onClick = { activity?.finish() }, modifier = Modifier.align(Alignment.TopStart)) {
-                Icon(imageVector = Icons.Outlined.ArrowBack, contentDescription = null, tint = Color.Black)
+            IconButton(
+                onClick = { activity?.finish() },
+                modifier = Modifier.align(Alignment.TopStart)
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.ArrowBack,
+                    contentDescription = null,
+                    tint = Color.Black
+                )
             }
             Column(modifier = Modifier.align(Alignment.BottomStart)) {
-                Text("Street Football", style = MaterialTheme.typography.titleLarge, color = Color.Black)
+                Text(
+                    "Street Football",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = Color.Black
+                )
                 Text(
                     "Experimente o futebol de rua autêntico em ambientes urbanos vibrantes.",
                     style = MaterialTheme.typography.bodyMedium,
@@ -124,7 +137,9 @@ fun StreetFootballDetailScreen(onBuyItem: (GameItem) -> Unit) {
                 onDismissRequest = { selectedItem.value = null },
                 sheetState = sheetState
             ) {
-                Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)) {
                     val item = selectedItem.value!!
                     Text(item.title, style = MaterialTheme.typography.titleMedium)
                     Text(item.description, style = MaterialTheme.typography.bodyMedium)

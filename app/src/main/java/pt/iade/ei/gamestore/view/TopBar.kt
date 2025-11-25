@@ -15,18 +15,14 @@ import androidx.compose.ui.tooling.preview.Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameStoreTopBar(
-    title: String,
-    showBack: Boolean,
-    onBack: () -> Unit
+    title: String, showBack: Boolean, onBack: () -> Unit
 ) {
     TopAppBar(
-        title = { Text(title) },
-        navigationIcon = {
+        title = { Text(title) }, navigationIcon = {
             if (showBack) {
                 IconButton(onClick = onBack) {
                     Icon(
-                        imageVector = Icons.Outlined.ArrowBack,
-                        contentDescription = null
+                        imageVector = Icons.Outlined.ArrowBack, contentDescription = null
                     )
                 }
             }
@@ -40,6 +36,7 @@ fun GameStoreTopBar(
         )
     )
 }
+
 @Preview(showBackground = true)
 @Composable
 fun GameStoreTopBarPreview() {

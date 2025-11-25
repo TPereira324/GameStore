@@ -31,7 +31,7 @@ fun GameStoreBottomBar(selectedIndex: Int, onSelectedIndexChange: (Int) -> Unit)
                 icon = { Icon(item.icon, contentDescription = null) },
                 label = { Text(item.label) },
 
-            )
+                )
         }
     }
 }

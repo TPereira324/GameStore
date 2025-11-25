@@ -50,9 +50,11 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
     val selectedItem = remember { mutableStateOf<GameItem?>(null) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
+    ) {
         val activity = (LocalContext.current as? android.app.Activity)
         Box(
             modifier = Modifier
@@ -138,9 +140,11 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                 onDismissRequest = { selectedItem.value = null },
                 sheetState = sheetState
             ) {
-                Column(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
                     val item = selectedItem.value!!
                     Text(item.title, style = MaterialTheme.typography.titleMedium)
                     Text(item.description, style = MaterialTheme.typography.bodyMedium)
