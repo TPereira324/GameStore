@@ -26,7 +26,3 @@ interface GameItemApi {
     fun itemsForGalaxyExplorers(): List<GameItem>
 }
 
-class RemoteGameItemRepository(private val api: GameItemApi) : GameItemRepository {
-    override fun itemsForStreetFootball(): List<GameItem> = api.itemsForStreetFootball()
-    override fun itemsForGalaxyExplorers(): List<GameItem> = api.itemsForGalaxyExplorers()
-}
