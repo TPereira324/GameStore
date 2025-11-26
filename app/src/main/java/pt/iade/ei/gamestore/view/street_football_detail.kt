@@ -62,7 +62,7 @@ fun StreetFootballDetailScreen(onBuyItem: (GameItem) -> Unit) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(220.dp)
+                .height(200.dp)
                 .padding(start = 16.dp, end = 16.dp, top = 56.dp)
 
         ) {
@@ -76,19 +76,34 @@ fun StreetFootballDetailScreen(onBuyItem: (GameItem) -> Unit) {
                     tint = Color.Black
                 )
             }
-            Column(modifier = Modifier.align(Alignment.BottomStart)) {
-                Text(
-                    "Street Football",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = Color.Black
+            Row(
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(bottom = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.estadio_noturno),
+                    contentDescription = "Street Football",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(72.dp)
                 )
-                Text(
-                    "Futebol de rua com ambientação urbana vibrante.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
+                Spacer(modifier = Modifier.size(12.dp))
+                Column {
+                    Text(
+                        "Street Football",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = Color.Black
+                    )
+                    Text(
+                        "Futebol de rua com ambientação urbana vibrante.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.Black,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
         }
         Spacer(modifier = Modifier.size(14.dp))
@@ -98,7 +113,11 @@ fun StreetFootballDetailScreen(onBuyItem: (GameItem) -> Unit) {
             modifier = Modifier.padding(16.dp),
             color = Color.Black
         )
-        LazyColumn(contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)) {
+        LazyColumn(
+            modifier = Modifier.weight(1f),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(12.dp)
+        ) {
             items(items) { item ->
                 Card(
                     shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
