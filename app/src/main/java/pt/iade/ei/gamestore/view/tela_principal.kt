@@ -1,5 +1,6 @@
 package pt.iade.ei.gamestore.view
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,23 +14,21 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import pt.iade.ei.gamestore.R
 import pt.iade.ei.gamestore.controller.GameDetailViewModel
 import pt.iade.ei.gamestore.model.Game
 import pt.iade.ei.gamestore.ui.theme.GameStoreTheme
@@ -47,38 +46,47 @@ fun TelaPrincipalScreen(games: List<Game>, onGameClick: (Game) -> Unit) {
     ) {
 
         Spacer(modifier = Modifier.size(8.dp))
-        games.take(2).forEach { game ->
-            SimpleGameBox(title = game.title) { onGameClick(game) }
+        val g1 = games.getOrNull(0)
+        if (g1 != null) {
+            SimpleGameBox(
+                title = g1.title,
+                imageResId = R.drawable.estadio_noturno
+            ) { onGameClick(g1) }
+        }
+        val g2 = games.getOrNull(1)
+        if (g2 != null) {
+            SimpleGameBox(
+                title = g2.title,
+                imageResId = R.drawable.galaxia
+            ) { onGameClick(g2) }
         }
     }
 }
 
 @Composable
-fun SimpleGameBox(title: String, onClick: () -> Unit) {
-    Card(
-        shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+fun SimpleGameBox(title: String, imageResId: Int, onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+            .clickable { onClick() }
     ) {
+        Image(
+            painter = painterResource(id = imageResId),
+            contentDescription = title,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(140.dp)
-                .clickable { onClick() }
-                .padding(16.dp),
+                .fillMaxSize()
+                .padding(5.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
-                modifier = Modifier
-                    .size(28.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xFFE5E7EB))
-            )
-            Spacer(modifier = Modifier.size(12.dp))
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleMedium,
-                color = Color.Black,
+                style = MaterialTheme.typography.titleLarge,
+                color = Color.White,
                 fontWeight = FontWeight.SemiBold
             )
         }
