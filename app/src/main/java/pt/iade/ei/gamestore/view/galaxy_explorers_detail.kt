@@ -120,6 +120,7 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
         ) {
             items(items) { item ->
                 Card(
+                    modifier = Modifier.fillMaxWidth(),
                     shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
                     colors = CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.08f)
@@ -181,17 +182,28 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                             tint = Color.Black
                         )
                     }
-                    Text(
-                        item.title,
-                        style = MaterialTheme.typography.titleLarge,
-                        color = Color.Black
-                    )
-                    Spacer(modifier = Modifier.size(8.dp))
-                    Text(
-                        item.description,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = Color.Black
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Image(
+                            painter = painterResource(id = imageResForGalaxyItem(item.title)),
+                            contentDescription = item.title,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.size(96.dp)
+                        )
+                        Spacer(modifier = Modifier.size(12.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                item.title,
+                                style = MaterialTheme.typography.titleLarge,
+                                color = Color.Black
+                            )
+                            Text(
+                                item.description,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = Color.Black
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.size(12.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically

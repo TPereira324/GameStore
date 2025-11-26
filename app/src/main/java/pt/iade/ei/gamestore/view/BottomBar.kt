@@ -20,6 +20,7 @@ data class BottomItem(val icon: ImageVector, val label: String)
 
 private val bottomItems = listOf(
     BottomItem(Icons.Outlined.Home, "Tela Principal")
+
 )
 
 @Composable

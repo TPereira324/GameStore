@@ -2,6 +2,7 @@ package pt.iade.ei.gamestore.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -41,6 +42,7 @@ fun MainNavigation(screen: String? = null, gameId: String? = null) {
     ) { inner ->
         Box(
             modifier = Modifier
+                .fillMaxSize()
                 .padding(inner)
                 .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
         ) {
