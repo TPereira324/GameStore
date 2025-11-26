@@ -1,5 +1,6 @@
 package pt.iade.ei.gamestore.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -62,4 +63,5 @@ fun GameDetailScreenPreview() {
     }
 }
 
+@SuppressLint("DefaultLocale")
 fun formatPriceEur(price: Double): String = String.format("%.2f€", price).replace('.', ',')

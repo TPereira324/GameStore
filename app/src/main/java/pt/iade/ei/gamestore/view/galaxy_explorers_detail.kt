@@ -1,6 +1,7 @@
 package pt.iade.ei.gamestore.view
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,10 +33,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import pt.iade.ei.gamestore.R
 import pt.iade.ei.gamestore.controller.GameDetailViewModel
 import pt.iade.ei.gamestore.model.GameItem
 import pt.iade.ei.gamestore.ui.theme.GameStoreTheme
@@ -106,7 +110,12 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                         modifier = Modifier.padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Spacer(modifier = Modifier.size(48.dp))
+                        Image(
+                            painter = painterResource(id = imageResForGalaxyItem(item.title)),
+                            contentDescription = item.title,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.size(48.dp)
+                        )
                         Spacer(modifier = Modifier.size(12.dp))
                         Column(modifier = Modifier.weight(1f)) {
                             Text(item.title, style = MaterialTheme.typography.titleMedium)
@@ -117,7 +126,7 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                                 maxLines = 2
                             )
                         }
-                        Spacer(modifier = androidx.compose.ui.Modifier.size(12.dp))
+                        Spacer(modifier = Modifier.size(12.dp))
                         Button(
                             onClick = { selectedItem.value = item },
                             colors = ButtonDefaults.buttonColors(
@@ -187,6 +196,16 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                 }
             }
         }
+    }
+}
+
+private fun imageResForGalaxyItem(title: String): Int {
+    val t = title.lowercase()
+    return when {
+        t.contains("rob") -> R.drawable.robo
+        t.contains("traje") || t.contains("quantum") -> R.drawable.traje
+        t.contains("expans") || t.contains("alien") -> R.drawable.expanse
+        else -> R.drawable.galaxia
     }
 }
 

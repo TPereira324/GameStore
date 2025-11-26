@@ -7,6 +7,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
@@ -40,7 +41,7 @@ fun GameStoreBottomBar(selectedIndex: Int, onSelectedIndexChange: (Int) -> Unit)
 @Composable
 fun BottomBarPreview() {
     GameStoreTheme {
-        val selected = remember { mutableStateOf(0) }
+        val selected = remember { mutableIntStateOf(0) }
         GameStoreBottomBar(
             selectedIndex = selected.value,
             onSelectedIndexChange = { selected.value = it })

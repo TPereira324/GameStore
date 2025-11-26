@@ -21,8 +21,3 @@ class LocalGameItemRepository : GameItemRepository {
     )
 }
 
-interface GameItemApi {
-    fun itemsForStreetFootball(): List<GameItem>
-    fun itemsForGalaxyExplorers(): List<GameItem>
-}
-

@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import pt.iade.ei.gamestore.controller.ProfileStatsViewModel
 import pt.iade.ei.gamestore.controller.StoreViewModel
 import pt.iade.ei.gamestore.ui.theme.GameStoreTheme
 
@@ -20,7 +19,6 @@ import pt.iade.ei.gamestore.ui.theme.GameStoreTheme
 @Composable
 fun MainNavigation(screen: String? = null, gameId: String? = null) {
     val store = remember { StoreViewModel() }
-    remember { ProfileStatsViewModel() }
     val context = LocalContext.current
     val routeState = androidx.compose.runtime.remember {
         androidx.compose.runtime.mutableStateOf(
