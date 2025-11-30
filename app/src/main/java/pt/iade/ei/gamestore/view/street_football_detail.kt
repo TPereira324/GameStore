@@ -1,6 +1,7 @@
 package pt.iade.ei.gamestore.view
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,10 +33,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import pt.iade.ei.gamestore.R
 import pt.iade.ei.gamestore.controller.GameDetailViewModel
 import pt.iade.ei.gamestore.model.GameItem
 import pt.iade.ei.gamestore.ui.theme.GameStoreTheme
@@ -49,83 +53,113 @@ fun StreetFootballDetailScreen(onBuyItem: (GameItem) -> Unit) {
     val selectedItem = remember { mutableStateOf<GameItem?>(null) }
 
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
     ) {
-        val activity = (LocalContext.current as? android.app.Activity)
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(220.dp)
-                .padding(start = 16.dp, end = 16.dp, top = 56.dp)
-                .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
+        Column(
+            modifier = Modifier.fillMaxSize()
         ) {
-            IconButton(
-                onClick = { activity?.finish() },
-                modifier = Modifier.align(Alignment.TopStart)
+            val activity = (LocalContext.current as? android.app.Activity)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .padding(start = 16.dp, end = 16.dp, top = 56.dp)
+                    .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
+
             ) {
-                Icon(
-                    imageVector = Icons.Outlined.ArrowBack,
-                    contentDescription = null,
-                    tint = Color.Black
-                )
-            }
-            Column(modifier = Modifier.align(Alignment.BottomStart)) {
-                Text(
-                    "Street Football",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = Color.Black
-                )
-                Text(
-                    "Futebol de rua com ambientação urbana vibrante.",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-        }
-        Spacer(modifier = Modifier.size(14.dp))
-        Text(
-            "Itens Disponíveis",
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(16.dp),
-            color = Color.Black
-        )
-        LazyColumn(contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)) {
-            items(items) { item ->
-                Card(
-                    shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.08f)
-                    )
+                IconButton(
+                    onClick = { activity?.finish() },
+                    modifier = Modifier.align(Alignment.TopStart)
                 ) {
-                    Row(
-                        modifier = Modifier.padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically
+                    Icon(
+                        imageVector = Icons.Outlined.ArrowBack,
+                        contentDescription = null,
+                        tint = Color.Black
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(bottom = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.estadio_noturno),
+                        contentDescription = "Street Football",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(72.dp)
+                    )
+                    Spacer(modifier = Modifier.size(12.dp))
+                    Column {
+                        Text(
+                            "Street Football",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = Color.Black
+                        )
+                        Text(
+                            "Futebol de rua com ambientação urbana vibrante.",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color.Black,
+                            maxLines = 3,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.size(12.dp))
+            Text(
+                "Itens Disponíveis",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(16.dp),
+                color = Color.Black
+            )
+            LazyColumn(
+                modifier = Modifier.weight(1f),
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+                verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(12.dp)
+            ) {
+                items(items) { item ->
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.08f)
+                        )
                     ) {
-                        Spacer(modifier = Modifier.size(48.dp))
-                        Spacer(modifier = Modifier.size(12.dp))
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(item.title, style = MaterialTheme.typography.titleMedium)
-                            Text(
-                                item.description,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                maxLines = 2
-                            )
-                        }
-                        Spacer(modifier = Modifier.size(12.dp))
-                        Button(
-                            onClick = { selectedItem.value = item },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.Black,
-                                contentColor = Color.White
-                            )
+                        Row(
+                            modifier = Modifier.padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(formatPriceEur(item.price), color = Color.White)
+                            Image(
+                                painter = painterResource(id = imageResForStreetItem(item.title)),
+                                contentDescription = item.title,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.size(48.dp)
+                            )
+                            Spacer(modifier = Modifier.size(12.dp))
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(item.title, style = MaterialTheme.typography.titleMedium)
+                                Text(
+                                    item.description,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    maxLines = 2
+                                )
+                            }
+                            Spacer(modifier = Modifier.size(12.dp))
+                            Button(
+                                onClick = { selectedItem.value = item },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color.Black,
+                                    contentColor = Color.White
+                                )
+                            ) {
+                                Text(formatPriceEur(item.price), color = Color.White)
+                            }
                         }
                     }
                 }
@@ -135,7 +169,9 @@ fun StreetFootballDetailScreen(onBuyItem: (GameItem) -> Unit) {
             val item = selectedItem.value!!
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
+                    .height(380.dp)
+                    .align(Alignment.BottomCenter)
                     .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
             ) {
                 Column(
@@ -150,17 +186,28 @@ fun StreetFootballDetailScreen(onBuyItem: (GameItem) -> Unit) {
                             tint = Color.Black
                         )
                     }
-                    Text(
-                        item.title,
-                        style = MaterialTheme.typography.titleLarge,
-                        color = Color.Black
-                    )
-                    Spacer(modifier = Modifier.size(8.dp))
-                    Text(
-                        item.description,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = Color.Black
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Image(
+                            painter = painterResource(id = imageResForStreetItem(item.title)),
+                            contentDescription = item.title,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.size(96.dp)
+                        )
+                        Spacer(modifier = Modifier.size(12.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                item.title,
+                                style = MaterialTheme.typography.titleLarge,
+                                color = Color.Black
+                            )
+                            Text(
+                                item.description,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = Color.Black
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.size(12.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
@@ -185,10 +232,28 @@ fun StreetFootballDetailScreen(onBuyItem: (GameItem) -> Unit) {
             }
         }
     }
+
+
 }
+
+private fun imageResForStreetItem(title: String): Int {
+    val t = title.lowercase()
+    return when {
+        t.contains("celebra") -> R.drawable.celebrator
+        t.contains("bola") || t.contains("ouro") -> R.drawable.bola_de_ouro
+        t.contains("camisa") || t.contains("brasil") -> R.drawable.camisa_do_brasil
+        else -> R.drawable.estadio_noturno
+    }
+}
+
+
 
 @Preview(showBackground = true)
 @Composable
 fun StreetFootballDetailScreenPreview() {
     GameStoreTheme { StreetFootballDetailScreen(onBuyItem = {}) }
 }
+
+
+
+

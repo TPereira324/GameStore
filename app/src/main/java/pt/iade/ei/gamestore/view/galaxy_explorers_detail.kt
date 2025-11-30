@@ -1,6 +1,7 @@
 package pt.iade.ei.gamestore.view
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,10 +33,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import pt.iade.ei.gamestore.R
 import pt.iade.ei.gamestore.controller.GameDetailViewModel
 import pt.iade.ei.gamestore.model.GameItem
 import pt.iade.ei.gamestore.ui.theme.GameStoreTheme
@@ -58,9 +62,9 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(220.dp)
+                .height(200.dp)
                 .padding(start = 16.dp, end = 16.dp, top = 56.dp)
-                .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
+
         ) {
             IconButton(
                 onClick = { activity?.finish() },
@@ -72,19 +76,34 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                     tint = Color.Black
                 )
             }
-            Column(modifier = Modifier.align(Alignment.BottomStart)) {
-                Text(
-                    "Galaxy Explorers",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = Color.Black
+            Row(
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(bottom = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.galaxia),
+                    contentDescription = "Galaxy Explorers",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(72.dp)
                 )
-                Text(
-                    "Aventura espacial com exploração intergaláctica",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Black,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
+                Spacer(modifier = Modifier.size(12.dp))
+                Column {
+                    Text(
+                        "Galaxy Explorers",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = Color.Black
+                    )
+                    Text(
+                        "Aventura espacial com exploração intergaláctica",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.Black,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
         }
         Spacer(modifier = Modifier.size(12.dp))
@@ -94,9 +113,14 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
             modifier = Modifier.padding(16.dp),
             color = Color.Black
         )
-        LazyColumn(contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)) {
+        LazyColumn(
+            modifier = Modifier.weight(1f),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
+            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(12.dp)
+        ) {
             items(items) { item ->
                 Card(
+                    modifier = Modifier.fillMaxWidth(),
                     shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
                     colors = CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.08f)
@@ -106,7 +130,12 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                         modifier = Modifier.padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Spacer(modifier = Modifier.size(48.dp))
+                        Image(
+                            painter = painterResource(id = imageResForGalaxyItem(item.title)),
+                            contentDescription = item.title,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.size(48.dp)
+                        )
                         Spacer(modifier = Modifier.size(12.dp))
                         Column(modifier = Modifier.weight(1f)) {
                             Text(item.title, style = MaterialTheme.typography.titleMedium)
@@ -117,7 +146,7 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                                 maxLines = 2
                             )
                         }
-                        Spacer(modifier = androidx.compose.ui.Modifier.size(12.dp))
+                        Spacer(modifier = Modifier.size(12.dp))
                         Button(
                             onClick = { selectedItem.value = item },
                             colors = ButtonDefaults.buttonColors(
@@ -153,17 +182,28 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                             tint = Color.Black
                         )
                     }
-                    Text(
-                        item.title,
-                        style = MaterialTheme.typography.titleLarge,
-                        color = Color.Black
-                    )
-                    Spacer(modifier = Modifier.size(8.dp))
-                    Text(
-                        item.description,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = Color.Black
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Image(
+                            painter = painterResource(id = imageResForGalaxyItem(item.title)),
+                            contentDescription = item.title,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.size(96.dp)
+                        )
+                        Spacer(modifier = Modifier.size(12.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                item.title,
+                                style = MaterialTheme.typography.titleLarge,
+                                color = Color.Black
+                            )
+                            Text(
+                                item.description,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = Color.Black
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.size(12.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
@@ -187,6 +227,16 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                 }
             }
         }
+    }
+}
+
+private fun imageResForGalaxyItem(title: String): Int {
+    val t = title.lowercase()
+    return when {
+        t.contains("rob") -> R.drawable.robo
+        t.contains("traje") || t.contains("quantum") -> R.drawable.traje
+        t.contains("expans") || t.contains("alien") -> R.drawable.expanse
+        else -> R.drawable.galaxia
     }
 }
 
