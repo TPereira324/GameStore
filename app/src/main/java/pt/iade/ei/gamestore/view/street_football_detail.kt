@@ -176,6 +176,7 @@ fun StreetFootballDetailScreen(onBuyItem: (GameItem) -> Unit) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(350.dp)
+                    .align(Alignment.BottomCenter)
                     .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
             ) {
                 Column(
