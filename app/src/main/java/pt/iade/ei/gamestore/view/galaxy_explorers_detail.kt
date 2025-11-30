@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -71,7 +71,7 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                 modifier = Modifier.align(Alignment.TopStart)
             ) {
                 Icon(
-                    imageVector = Icons.Outlined.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
                     contentDescription = null,
                     tint = Color.Black
                 )
@@ -106,7 +106,7 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                 }
             }
         }
-        Spacer(modifier = Modifier.size(12.dp))
+        Spacer(modifier = Modifier.size(14.dp))
         Text(
             "Itens Disponíveis",
             style = MaterialTheme.typography.titleMedium,
@@ -114,9 +114,9 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
             color = Color.Black
         )
         LazyColumn(
-            modifier = Modifier.weight(1f),
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
-            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(12.dp)
+            modifier = Modifier.weight(100f),
+            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 20.dp),
+            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(20.dp)
         ) {
             items(items) { item ->
                 Card(
@@ -134,11 +134,14 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                             painter = painterResource(id = imageResForGalaxyItem(item.title)),
                             contentDescription = item.title,
                             contentScale = ContentScale.Crop,
-                            modifier = Modifier.size(48.dp)
+                            modifier = Modifier.size(60.dp)
                         )
-                        Spacer(modifier = Modifier.size(12.dp))
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(item.title, style = MaterialTheme.typography.titleMedium)
+                        Spacer(modifier = Modifier.size(14.dp))
+                        Column(modifier = Modifier.weight(10f)) {
+                            Text(
+                                item.title,
+                                style = MaterialTheme.typography.titleMedium
+                            )
                             Text(
                                 item.description,
                                 style = MaterialTheme.typography.bodySmall,
@@ -146,7 +149,7 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                                 maxLines = 2
                             )
                         }
-                        Spacer(modifier = Modifier.size(12.dp))
+                        Spacer(modifier = Modifier.size(14.dp))
                         Button(
                             onClick = { selectedItem.value = item },
                             colors = ButtonDefaults.buttonColors(
@@ -168,6 +171,7 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .height(350.dp)
                     .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
             ) {
                 Column(
@@ -177,7 +181,7 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                 ) {
                     IconButton(onClick = { selectedItem.value = null }) {
                         Icon(
-                            imageVector = Icons.Outlined.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
                             contentDescription = null,
                             tint = Color.Black
                         )
@@ -189,8 +193,8 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.size(96.dp)
                         )
-                        Spacer(modifier = Modifier.size(12.dp))
-                        Column(modifier = Modifier.weight(1f)) {
+                        Spacer(modifier = Modifier.size(14.dp))
+                        Column(modifier = Modifier.weight(10f)) {
                             Text(
                                 item.title,
                                 style = MaterialTheme.typography.titleLarge,
@@ -203,7 +207,7 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                             )
                         }
                     }
-                    Spacer(modifier = Modifier.size(12.dp))
+                    Spacer(modifier = Modifier.size(14.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
@@ -213,7 +217,7 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                             style = MaterialTheme.typography.titleMedium,
                             color = MaterialTheme.colorScheme.primary
                         )
-                        Spacer(modifier = Modifier.weight(1f))
+                        Spacer(modifier = Modifier.weight(10f))
                         Button(
                             onClick = { onBuyItem(item); selectedItem.value = null },
                             colors = ButtonDefaults.buttonColors(
