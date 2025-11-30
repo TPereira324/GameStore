@@ -220,7 +220,7 @@ fun StreetFootballDetailScreen(onBuyItem: (GameItem) -> Unit) {
                         Text(
                             formatPriceEur(item.price),
                             style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.primary
+                            color = Color.Black
                         )
                         Spacer(modifier = Modifier.weight(10f))
                         Button(
