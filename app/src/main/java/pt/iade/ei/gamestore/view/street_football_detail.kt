@@ -226,7 +226,7 @@ fun StreetFootballDetailScreen(onBuyItem: (GameItem) -> Unit) {
                         Button(
                             onClick = { onBuyItem(item); selectedItem.value = null },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFFEF4444),
+                                containerColor = Color.Black,
                                 contentColor = Color.White
                             )
                         ) {
