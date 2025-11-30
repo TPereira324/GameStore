@@ -49,15 +49,13 @@ fun TelaPrincipalScreen(games: List<Game>, onGameClick: (Game) -> Unit) {
         val g1 = games.getOrNull(0)
         if (g1 != null) {
             SimpleGameBox(
-                title = g1.title,
-                imageResId = R.drawable.estadio_noturno
+                title = g1.title, imageResId = R.drawable.estadio_noturno
             ) { onGameClick(g1) }
         }
         val g2 = games.getOrNull(1)
         if (g2 != null) {
             SimpleGameBox(
-                title = g2.title,
-                imageResId = R.drawable.galaxia
+                title = g2.title, imageResId = R.drawable.galaxia
             ) { onGameClick(g2) }
         }
     }
@@ -69,8 +67,7 @@ fun SimpleGameBox(title: String, imageResId: Int, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
-            .clickable { onClick() }
-    ) {
+            .clickable { onClick() }) {
         Image(
             painter = painterResource(id = imageResId),
             contentDescription = title,
@@ -105,16 +102,13 @@ fun TelaPrincipalScreenPreview() {
                     imageUrl = null,
                     price = 9.99,
                     featured = true
-                ),
-                Game(
+                ), Game(
                     id = "g2",
                     title = "Galaxy Explorers",
                     imageUrl = null,
                     price = 14.99,
                     featured = true
                 )
-            ),
-            onGameClick = {}
-        )
+            ), onGameClick = {})
     }
 }
