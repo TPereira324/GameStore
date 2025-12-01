@@ -47,8 +47,7 @@ fun TelaPrincipalScreen(games: List<Game>, onGameClick: (Game) -> Unit) {
 
         Spacer(modifier = Modifier.size(8.dp))
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = "Game Store",
