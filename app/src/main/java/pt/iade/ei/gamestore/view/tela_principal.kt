@@ -52,7 +52,7 @@ fun TelaPrincipalScreen(games: List<Game>, onGameClick: (Game) -> Unit) {
         ) {
             Text(
                 text = "Game Store",
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.headlineLarge,
                 color = Color.Black,
                 fontWeight = FontWeight.SemiBold
             )
