@@ -46,6 +46,11 @@ fun TelaPrincipalScreen(games: List<Game>, onGameClick: (Game) -> Unit) {
     ) {
 
         Spacer(modifier = Modifier.size(8.dp))
+        Text(
+            text = "Game Store",
+            style = MaterialTheme.typography.titleLarge,
+            color = Color.Black
+        )
         val g1 = games.getOrNull(0)
         if (g1 != null) {
             SimpleGameBox(
