@@ -34,19 +34,17 @@ Esta aplicação simula uma loja de jogos onde os usuários podem:
 Jogo de futebol de rua com ambientação urbana vibrante
 
 **Itens Compráveis:**
-- Bola de Ouro Lendária - £6.99
-- Camisa Legendária Brasil - £9.99
-- Estádio Noturno Iluminado - £11.99
-- Pacote de Celebrações - £4.99
+- Camisa Legendária Brasil - 9.99€
+- Estádio Noturno Iluminado - 11.99€
+- Pacote de Celebrações - 4.99€
 
 ###  Galaxy Explorers
 Jogo de aventura espacial com exploração intergaláctica
 
 **Itens Compráveis:**
-- Nave Millennium X1 - £15.99
-- Expansão: Fronteira Alien - £12.99
-- Traje Espacial Quantum - £8.99
-- Companheiro Robótico AX-7 - €7.99
+- Expansão: Fronteira Alien - 12.99€
+- Traje Espacial Quantum - 8.99€
+- Companheiro Robótico AX-7 -7.99€
 
 
 ## Padrões Implementados
