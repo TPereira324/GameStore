@@ -16,7 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -53,111 +53,118 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
     val selectedItem = remember { mutableStateOf<GameItem?>(null) }
 
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
     ) {
-        val activity = (LocalContext.current as? android.app.Activity)
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-                .padding(start = 16.dp, end = 16.dp, top = 56.dp)
-
+        Column(
+            modifier = Modifier.fillMaxSize()
         ) {
-            IconButton(
-                onClick = { activity?.finish() },
-                modifier = Modifier.align(Alignment.TopStart)
-            ) {
-                Icon(
-                    imageVector = Icons.Outlined.ArrowBack,
-                    contentDescription = null,
-                    tint = Color.Black
-                )
-            }
-            Row(
+            val activity = (LocalContext.current as? android.app.Activity)
+            Box(
                 modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .padding(bottom = 12.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .padding(start = 16.dp, end = 16.dp, top = 56.dp)
+
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.galaxia),
-                    contentDescription = "Galaxy Explorers",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(72.dp)
-                )
-                Spacer(modifier = Modifier.size(12.dp))
-                Column {
-                    Text(
-                        "Galaxy Explorers",
-                        style = MaterialTheme.typography.titleLarge,
-                        color = Color.Black
-                    )
-                    Text(
-                        "Aventura espacial com exploração intergaláctica",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = Color.Black,
-                        maxLines = 3,
-                        overflow = TextOverflow.Ellipsis
+                IconButton(
+                    onClick = { activity?.finish() },
+                    modifier = Modifier.align(Alignment.TopStart)
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                        contentDescription = null,
+                        tint = Color.Black
                     )
                 }
-            }
-        }
-        Spacer(modifier = Modifier.size(12.dp))
-        Text(
-            "Itens Disponíveis",
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(16.dp),
-            color = Color.Black
-        )
-        LazyColumn(
-            modifier = Modifier.weight(1f),
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
-            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(12.dp)
-        ) {
-            items(items) { item ->
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.08f)
-                    )
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(bottom = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(
-                        modifier = Modifier.padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Image(
-                            painter = painterResource(id = imageResForGalaxyItem(item.title)),
-                            contentDescription = item.title,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.size(48.dp)
+                    Image(
+                        painter = painterResource(id = R.drawable.galaxia),
+                        contentDescription = "Galaxy Explorers",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(72.dp)
+                    )
+                    Spacer(modifier = Modifier.size(12.dp))
+                    Column {
+                        Text(
+                            "Galaxy Explorers",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = Color.Black
                         )
-                        Spacer(modifier = Modifier.size(12.dp))
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(item.title, style = MaterialTheme.typography.titleMedium)
-                            Text(
-                                item.description,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                maxLines = 2
-                            )
-                        }
-                        Spacer(modifier = Modifier.size(12.dp))
-                        Button(
-                            onClick = { selectedItem.value = item },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.Black,
-                                contentColor = Color.White
-                            )
+                        Text(
+                            "Aventura espacial com exploração intergaláctica",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color.Black,
+                            maxLines = 3,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.size(14.dp))
+            Text(
+                "Itens Disponíveis",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(16.dp),
+                color = Color.Black
+            )
+            LazyColumn(
+                modifier = Modifier.weight(100f),
+                contentPadding = PaddingValues(horizontal = 20.dp, vertical = 20.dp),
+                verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(20.dp)
+            ) {
+                items(items) { item ->
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.08f)
+                        )
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(
-                                formatPriceEur(item.price),
-                                color = Color.White
+                            Image(
+                                painter = painterResource(id = imageResForGalaxyItem(item.title)),
+                                contentDescription = item.title,
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier.size(60.dp)
                             )
+                            Spacer(modifier = Modifier.size(14.dp))
+                            Column(modifier = Modifier.weight(10f)) {
+                                Text(
+                                    item.title,
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                Text(
+                                    item.description,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    maxLines = 2
+                                )
+                            }
+                            Spacer(modifier = Modifier.size(14.dp))
+                            Button(
+                                onClick = { selectedItem.value = item },
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color.Black,
+                                    contentColor = Color.White
+                                )
+                            ) {
+                                Text(
+                                    formatPriceEur(item.price),
+                                    color = Color.White
+                                )
+                            }
                         }
                     }
                 }
@@ -167,7 +174,9 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
             val item = selectedItem.value!!
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
+                    .height(350.dp)
+                    .align(Alignment.BottomCenter)
                     .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
             ) {
                 Column(
@@ -177,7 +186,7 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                 ) {
                     IconButton(onClick = { selectedItem.value = null }) {
                         Icon(
-                            imageVector = Icons.Outlined.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
                             contentDescription = null,
                             tint = Color.Black
                         )
@@ -189,8 +198,8 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.size(96.dp)
                         )
-                        Spacer(modifier = Modifier.size(12.dp))
-                        Column(modifier = Modifier.weight(1f)) {
+                        Spacer(modifier = Modifier.size(14.dp))
+                        Column(modifier = Modifier.weight(10f)) {
                             Text(
                                 item.title,
                                 style = MaterialTheme.typography.titleLarge,
@@ -203,7 +212,7 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                             )
                         }
                     }
-                    Spacer(modifier = Modifier.size(12.dp))
+                    Spacer(modifier = Modifier.size(14.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
@@ -211,13 +220,13 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                         Text(
                             formatPriceEur(item.price),
                             style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.primary
+                            color = Color.Black
                         )
-                        Spacer(modifier = Modifier.weight(1f))
+                        Spacer(modifier = Modifier.weight(10f))
                         Button(
                             onClick = { onBuyItem(item); selectedItem.value = null },
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFFEF4444),
+                                containerColor = Color.Black,
                                 contentColor = Color.White
                             )
                         ) {
