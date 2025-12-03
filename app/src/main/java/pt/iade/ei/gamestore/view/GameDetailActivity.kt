@@ -73,7 +73,7 @@ class GameDetailActivity : ComponentActivity() {
 }
 
 @Composable
-fun GameDetailScreen(game: Game, onBuyItem: (pt.iade.ei.gamestore.model.GameItem) -> Unit) {
+fun GameDetailScreen(game: Game, onBuyItem: (GameItem) -> Unit) {
     Column(modifier = Modifier.fillMaxSize()) {
         when (game.id) {
             "g1" -> StreetFootballDetailScreen(onBuyItem = onBuyItem)
@@ -83,21 +83,6 @@ fun GameDetailScreen(game: Game, onBuyItem: (pt.iade.ei.gamestore.model.GameItem
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun GameDetailScreenPreview() {
-    GameStoreTheme {
-        GameDetailScreen(
-            game = Game(
-                id = "g1",
-                title = "Street Football",
-                imageUrl = null,
-                price = 9.99,
-                featured = true
-            ), onBuyItem = {})
-    }
-}
 
 @SuppressLint("DefaultLocale")
 fun formatPriceEur(price: Double): String = String.format("%.2f€", price).replace('.', ',')
@@ -512,4 +497,16 @@ private fun imageResForGalaxyItem(title: String): Int {
         t.contains("expans") || t.contains("alien") -> R.drawable.expanse
         else -> R.drawable.galaxia
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun StreetFootballDetailScreenPreview() {
+    GameStoreTheme { StreetFootballDetailScreen(onBuyItem = {}) }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun GalaxyExplorersDetailScreenPreview() {
+    GameStoreTheme { GalaxyExplorersDetailScreen(onBuyItem = {}) }
 }
