@@ -22,12 +22,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Refresh
 import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -92,7 +95,6 @@ private val bottomItems = listOf(
     BottomItem(Icons.Outlined.Star, "Featured"),
     BottomItem(Icons.Outlined.Refresh, "History"),
     BottomItem(Icons.Outlined.Person, "Profile")
-
 )
 
 @Composable
@@ -133,6 +135,22 @@ fun TelaPrincipalScreen(games: List<Game>, onGameClick: (Game) -> Unit) {
                 fontWeight = FontWeight.SemiBold
             )
             Spacer(modifier = Modifier.weight(1f))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = { }) {
+                    Icon(
+                        imageVector = Icons.Outlined.Notifications,
+                        contentDescription = null,
+                        tint = Color.White
+                    )
+                }
+                IconButton(onClick = { }) {
+                    Icon(
+                        imageVector = Icons.Outlined.Settings,
+                        contentDescription = null,
+                        tint = Color.White
+                    )
+                }
+            }
         }
         val g1 = games.getOrNull(0)
         if (g1 != null) {
