@@ -1,10 +1,9 @@
-package pt.iade.ei.gamestore
+package pt.iade.ei.gamestore.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import pt.iade.ei.gamestore.ui.theme.GameStoreTheme
-import pt.iade.ei.gamestore.view.MainNavigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

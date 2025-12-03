@@ -14,7 +14,7 @@
         android:theme="@style/Theme.GameStore">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true"
             android:label="Loja de Jogos"
             android:theme="@style/Theme.GameStore">
