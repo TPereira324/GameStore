@@ -1,5 +1,6 @@
 package pt.iade.ei.gamestore.model
 
+import java.io.Serializable
 import java.time.LocalDateTime
 
 data class Purchase(
@@ -9,4 +10,4 @@ data class Purchase(
     val itemTitle: String? = null,
     val price: Double,
     val date: LocalDateTime
-)
+) : Serializable
