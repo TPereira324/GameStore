@@ -19,7 +19,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Refresh
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -85,13 +87,17 @@ class MainActivity : ComponentActivity() {
 
 data class BottomItem(val icon: ImageVector, val label: String)
 
+
 private val bottomItems = listOf(
-    BottomItem(Icons.Outlined.Home, "Tela Principal")
+    BottomItem(Icons.Outlined.Star, "Featured"),
+    BottomItem(Icons.Outlined.Refresh, "History"),
+    BottomItem(Icons.Outlined.Person, "Profile")
+
 )
 
 @Composable
 fun GameStoreBottomBar(selectedIndex: Int, onSelectedIndexChange: (Int) -> Unit) {
-    NavigationBar(containerColor = Color(0xFFEF4444), contentColor = Color.White) {
+    NavigationBar(containerColor = Color(0xFFF2ECF7), contentColor = Color(0xFF444444)) {
         bottomItems.forEachIndexed { index, item ->
             NavigationBarItem(
                 selected = selectedIndex == index,
