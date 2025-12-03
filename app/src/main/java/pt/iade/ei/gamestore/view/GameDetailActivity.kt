@@ -510,3 +510,82 @@ fun StreetFootballDetailScreenPreview() {
 fun GalaxyExplorersDetailScreenPreview() {
     GameStoreTheme { GalaxyExplorersDetailScreen(onBuyItem = {}) }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun StreetFootballSelectedItemPreview() {
+    GameStoreTheme {
+        val item = GameItem(
+            "Pacote de Celebrações",
+            "10 celebrações exclusivas após o gol",
+            4.99
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(350.dp)
+                .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                IconButton(onClick = { }) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                        contentDescription = null,
+                        tint = Color.Black
+                    )
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(
+                        painter = painterResource(id = imageResForStreetItem(item.title)),
+                        contentDescription = item.title,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.size(96.dp)
+                    )
+                    Spacer(modifier = Modifier.size(14.dp))
+                    Column(modifier = Modifier.weight(10f)) {
+                        Text(
+                            item.title,
+                            style = MaterialTheme.typography.titleLarge,
+                            color = Color.Black
+                        )
+                        Text(
+                            item.description,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color.Black
+                        )
+                        Text(
+                            "Name of the company",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = Color.Black
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.size(14.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        formatPriceEur(item.price),
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color.Black
+                    )
+                    Spacer(modifier = Modifier.weight(10f))
+                    Button(
+                        onClick = { },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Black,
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text("Buy with 1-click")
+                    }
+                }
+            }
+        }
+    }
+}
