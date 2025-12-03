@@ -1,13 +1,13 @@
 # Game Store App
 
-Uma aplicação móvel de loja de jogos desenvolvida em Kotlin com Jetpack Compose, seguindo as melhores práticas de desenvolvimento Android e o padrão MVC.
+Uma aplicação móvel de loja de jogos desenvolvida em Kotlin com Jetpack Compose, seguindo o padrão MVC.
 
 ## Sobre o Projeto
 
 Esta aplicação simula uma loja de jogos onde os usuários podem:
 - Visualizar uma lista de jogos disponíveis
 - Ver detalhes de cada jogo
-- Explorar itens compráveis (DLCs, expansões, skins)
+- Explorar itens compráveis
 - Simular compras de itens
 
 ## Funcionalidades
