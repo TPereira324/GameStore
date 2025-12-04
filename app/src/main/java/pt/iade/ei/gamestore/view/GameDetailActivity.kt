@@ -45,6 +45,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pt.iade.ei.gamestore.R
 import pt.iade.ei.gamestore.controller.GameDetailViewModel
+import pt.iade.ei.gamestore.controller.StoreViewModel
 import pt.iade.ei.gamestore.model.Game
 import pt.iade.ei.gamestore.model.GameItem
 import pt.iade.ei.gamestore.ui.theme.GameStoreTheme
@@ -76,9 +77,9 @@ class GameDetailActivity : ComponentActivity() {
 fun GameDetailScreen(game: Game, onBuyItem: (GameItem) -> Unit) {
     Column(modifier = Modifier.fillMaxSize()) {
         when (game.id) {
-            "g1" -> StreetFootballDetailScreen(onBuyItem = onBuyItem)
-            "g2" -> GalaxyExplorersDetailScreen(onBuyItem = onBuyItem)
-            else -> GalaxyExplorersDetailScreen(onBuyItem = onBuyItem)
+            "g1" -> StreetFootballDetailScreen(game = game, onBuyItem = onBuyItem)
+            "g2" -> GalaxyExplorersDetailScreen(game = game, onBuyItem = onBuyItem)
+            else -> GalaxyExplorersDetailScreen(game = game, onBuyItem = onBuyItem)
         }
     }
 }
@@ -90,8 +91,9 @@ fun formatPriceEur(price: Double): String = String.format("%.2f€", price).repl
 @SuppressLint("ContextCastToActivity")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StreetFootballDetailScreen(onBuyItem: (GameItem) -> Unit) {
+fun StreetFootballDetailScreen(game: Game, onBuyItem: (GameItem) -> Unit) {
     val vm = remember { GameDetailViewModel() }
+    val store = remember { StoreViewModel() }
     val items = vm.itemsForStreetFootball()
     val selectedItem = remember { mutableStateOf<GameItem?>(null) }
 
@@ -111,8 +113,7 @@ fun StreetFootballDetailScreen(onBuyItem: (GameItem) -> Unit) {
                     .padding(start = 16.dp, end = 16.dp, top = 56.dp)
             ) {
                 IconButton(
-                    onClick = { activity?.finish() },
-                    modifier = Modifier.align(Alignment.TopStart)
+                    onClick = { activity?.finish() }, modifier = Modifier.align(Alignment.TopStart)
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
@@ -169,136 +170,41 @@ fun StreetFootballDetailScreen(onBuyItem: (GameItem) -> Unit) {
                             containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.08f)
                         )
                     ) {
-                        Row(
-                            modifier = Modifier.padding(16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Image(
-                                painter = painterResource(id = imageResForStreetItem(item.title)),
-                                contentDescription = item.title,
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier.size(60.dp)
-                            )
-                            Spacer(modifier = Modifier.size(14.dp))
-                            Column(modifier = Modifier.weight(10f)) {
-                                Text(
-                                    item.title,
-                                    style = MaterialTheme.typography.titleMedium
-                                )
-                                Text(
-                                    item.description,
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurface,
-                                    maxLines = 2
-                                )
-                            }
-                            Spacer(modifier = Modifier.size(14.dp))
-                            Button(
-                                onClick = { selectedItem.value = item },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color.Black,
-                                    contentColor = Color.White
-                                )
-                            ) {
-                                Text(
-                                    formatPriceEur(item.price),
-                                    color = Color.White
-                                )
-                            }
-                        }
+                        ItemCard(
+                            item = item,
+                            imageFallbackRes = R.drawable.estadio_noturno,
+                            buttonColor = Color(0xFFEF4444),
+                            onSelect = { selectedItem.value = item })
                     }
                 }
             }
         }
         if (selectedItem.value != null) {
             val item = selectedItem.value!!
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(350.dp)
-                    .align(Alignment.BottomCenter)
-                    .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-                    IconButton(onClick = { selectedItem.value = null }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                            contentDescription = null,
-                            tint = Color.Black
-                        )
-                    }
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            painter = painterResource(id = imageResForStreetItem(item.title)),
-                            contentDescription = item.title,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.size(96.dp)
-                        )
-                        Spacer(modifier = Modifier.size(14.dp))
-                        Column(modifier = Modifier.weight(10f)) {
-                            Text(
-                                item.title,
-                                style = MaterialTheme.typography.titleLarge,
-                                color = Color.Black
-                            )
-                            Text(
-                                item.description,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = Color.Black
-                            )
-                            Text(
-                                "Name of the company",
-                                style = MaterialTheme.typography.titleMedium,
-                                color = Color.Black
-                            )
-                        }
-                    }
-                    Spacer(modifier = Modifier.size(14.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            formatPriceEur(item.price),
-                            style = MaterialTheme.typography.titleMedium,
-                            color = Color.Black
-                        )
-                        Spacer(modifier = Modifier.weight(10f))
-                        Button(
-                            onClick = { onBuyItem(item); selectedItem.value = null },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.Black,
-                                contentColor = Color.White
-                            )
-                        ) {
-                            Text("Buy with 1-click")
-                        }
-                    }
-                }
-            }
+            SelectedItemPanel(
+                item = item,
+                imageFallbackRes = R.drawable.estadio_noturno,
+                buttonColor = Color(0xFFEF4444),
+                onClose = { selectedItem.value = null },
+                onBuy = {
+                    store.addPurchaseItem(
+                        userId = "u1", game = game, itemTitle = item.title, price = item.price
+                    )
+                    onBuyItem(item)
+                    selectedItem.value = null
+                },
+                modifier = Modifier.align(Alignment.BottomCenter)
+            )
         }
-    }
-}
-
-private fun imageResForStreetItem(title: String): Int {
-    val t = title.lowercase()
-    return when {
-        t.contains("celebra") -> R.drawable.celebrator
-        t.contains("bola") || t.contains("ouro") -> R.drawable.bola_de_ouro
-        t.contains("camisa") || t.contains("brasil") -> R.drawable.camisa_do_brasil
-        else -> R.drawable.estadio_noturno
     }
 }
 
 @SuppressLint("ContextCastToActivity")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
+fun GalaxyExplorersDetailScreen(game: Game, onBuyItem: (GameItem) -> Unit) {
     val vm = remember { GameDetailViewModel() }
+    val store = remember { StoreViewModel() }
     val items = vm.itemsForGalaxyExplorers()
     val selectedItem = remember { mutableStateOf<GameItem?>(null) }
 
@@ -316,8 +222,7 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                     .padding(start = 16.dp, end = 16.dp, top = 56.dp)
             ) {
                 IconButton(
-                    onClick = { activity?.finish() },
-                    modifier = Modifier.align(Alignment.TopStart)
+                    onClick = { activity?.finish() }, modifier = Modifier.align(Alignment.TopStart)
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
@@ -374,141 +279,162 @@ fun GalaxyExplorersDetailScreen(onBuyItem: (GameItem) -> Unit) {
                             containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.08f)
                         )
                     ) {
-                        Row(
-                            modifier = Modifier.padding(16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Image(
-                                painter = painterResource(id = imageResForGalaxyItem(item.title)),
-                                contentDescription = item.title,
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier.size(60.dp)
-                            )
-                            Spacer(modifier = Modifier.size(14.dp))
-                            Column(modifier = Modifier.weight(10f)) {
-                                Text(
-                                    item.title,
-                                    style = MaterialTheme.typography.titleMedium
-                                )
-                                Text(
-                                    item.description,
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurface,
-                                    maxLines = 2
-                                )
-                            }
-                            Spacer(modifier = Modifier.size(14.dp))
-                            Button(
-                                onClick = { selectedItem.value = item },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color.Black,
-                                    contentColor = Color.White
-                                )
-                            ) {
-                                Text(
-                                    formatPriceEur(item.price),
-                                    color = Color.White
-                                )
-                            }
-                        }
+                        ItemCard(
+                            item = item,
+                            imageFallbackRes = R.drawable.galaxia,
+                            buttonColor = Color(0xFFEF4444),
+                            onSelect = { selectedItem.value = item })
                     }
                 }
             }
         }
         if (selectedItem.value != null) {
             val item = selectedItem.value!!
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(350.dp)
-                    .align(Alignment.BottomCenter)
-                    .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
+            SelectedItemPanel(
+                item = item,
+                imageFallbackRes = R.drawable.galaxia,
+                buttonColor = Color(0xFFEF4444),
+                onClose = { selectedItem.value = null },
+                onBuy = {
+                    store.addPurchaseItem(
+                        userId = "u1", game = game, itemTitle = item.title, price = item.price
+                    )
+                    onBuyItem(item)
+                    selectedItem.value = null
+                },
+                modifier = Modifier.align(Alignment.BottomCenter)
+            )
+        }
+    }
+}
+
+@Composable
+private fun ItemCard(
+    item: GameItem, imageFallbackRes: Int, buttonColor: Color, onSelect: () -> Unit
+) {
+    Row(
+        modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            painter = painterResource(id = item.imageResId ?: imageFallbackRes),
+            contentDescription = item.title,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.size(60.dp)
+        )
+        Spacer(modifier = Modifier.size(14.dp))
+        Column(modifier = Modifier.weight(10f)) {
+            Text(item.title, style = MaterialTheme.typography.titleMedium)
+            Text(
+                item.shortDescription ?: item.description,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurface,
+                maxLines = 2
+            )
+        }
+        Spacer(modifier = Modifier.size(14.dp))
+        Button(
+            onClick = onSelect, colors = ButtonDefaults.buttonColors(
+                containerColor = buttonColor, contentColor = Color.White
+            )
+        ) {
+            Text(formatPriceEur(item.price), color = Color.White)
+        }
+    }
+}
+
+@Composable
+private fun SelectedItemPanel(
+    item: GameItem,
+    imageFallbackRes: Int,
+    buttonColor: Color,
+    onClose: () -> Unit,
+    onBuy: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(350.dp)
+            .background(Brush.linearGradient(listOf(Color(0xFFEF4444), Color.White)))
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            IconButton(onClick = onClose) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                    contentDescription = null,
+                    tint = Color.Black
+                )
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Image(
+                    painter = painterResource(id = item.imageResId ?: imageFallbackRes),
+                    contentDescription = item.title,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.size(96.dp)
+                )
+                Spacer(modifier = Modifier.size(14.dp))
+                Column(modifier = Modifier.weight(10f)) {
+                    Text(
+                        item.title, style = MaterialTheme.typography.titleLarge, color = Color.Black
+                    )
+                    Text(
+                        item.description,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.Black
+                    )
+                    Text(
+                        item.seller ?: "",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color.Black
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.size(14.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
+                Text(
+                    formatPriceEur(item.price),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Color.White
+                )
+                Spacer(modifier = Modifier.weight(10f))
+                Button(
+                    onClick = onBuy, colors = ButtonDefaults.buttonColors(
+                        containerColor = buttonColor, contentColor = Color.White
+                    )
                 ) {
-                    IconButton(onClick = { selectedItem.value = null }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                            contentDescription = null,
-                            tint = Color.Black
-                        )
-                    }
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            painter = painterResource(id = imageResForGalaxyItem(item.title)),
-                            contentDescription = item.title,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.size(96.dp)
-                        )
-                        Spacer(modifier = Modifier.size(14.dp))
-                        Column(modifier = Modifier.weight(10f)) {
-                            Text(
-                                item.title,
-                                style = MaterialTheme.typography.titleLarge,
-                                color = Color.Black
-                            )
-                            Text(
-                                item.description,
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = Color.Black
-                            )
-                            Text(
-                                "Name of the company",
-                                style = MaterialTheme.typography.titleMedium,
-                                color = Color.Black
-                            )
-                        }
-                    }
-                    Spacer(modifier = Modifier.size(14.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            formatPriceEur(item.price),
-                            style = MaterialTheme.typography.titleMedium,
-                            color = Color.Black
-                        )
-                        Spacer(modifier = Modifier.weight(10f))
-                        Button(
-                            onClick = { onBuyItem(item); selectedItem.value = null },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFFEF4444),
-                                contentColor = Color.White
-                            )
-                        ) {
-                            Text("Buy with 1-click")
-                        }
-                    }
+                    Text("Buy with 1-click")
                 }
             }
         }
     }
 }
 
-private fun imageResForGalaxyItem(title: String): Int {
-    val t = title.lowercase()
-    return when {
-        t.contains("rob") -> R.drawable.robo
-        t.contains("traje") || t.contains("quantum") -> R.drawable.traje
-        t.contains("expans") || t.contains("alien") -> R.drawable.expanse
-        else -> R.drawable.galaxia
+@Preview(showBackground = true)
+@Composable
+fun StreetFootballDetailScreenPreview() {
+    GameStoreTheme {
+        StreetFootballDetailScreen(
+            game = Game(
+                id = "g1", title = "Street Football", imageUrl = null, price = 0.0
+            ), onBuyItem = {})
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun StreetFootballDetailScreenPreview() {
-    GameStoreTheme { StreetFootballDetailScreen(onBuyItem = {}) }
-}
-
-@Preview(showBackground = true)
-@Composable
 fun GalaxyExplorersDetailScreenPreview() {
-    GameStoreTheme { GalaxyExplorersDetailScreen(onBuyItem = {}) }
+    GameStoreTheme {
+        GalaxyExplorersDetailScreen(
+            game = Game(
+                id = "g2", title = "Galaxy Explorers", imageUrl = null, price = 0.0
+            ), onBuyItem = {})
+    }
 }
 
 @Preview(showBackground = true)
@@ -516,9 +442,7 @@ fun GalaxyExplorersDetailScreenPreview() {
 fun StreetFootballSelectedItemPreview() {
     GameStoreTheme {
         val item = GameItem(
-            "Pacote de Celebrações",
-            "10 celebrações exclusivas após o gol",
-            4.99
+            "Pacote de Celebrações", "10 celebrações exclusivas após o gol", 4.99
         )
         Box(
             modifier = Modifier
@@ -540,7 +464,9 @@ fun StreetFootballSelectedItemPreview() {
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(id = imageResForStreetItem(item.title)),
+                        painter = painterResource(
+                            id = item.imageResId ?: R.drawable.estadio_noturno
+                        ),
                         contentDescription = item.title,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.size(96.dp)
@@ -557,11 +483,6 @@ fun StreetFootballSelectedItemPreview() {
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color.Black
                         )
-                        Text(
-                            "Name of the company",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = Color.Black
-                        )
                     }
                 }
                 Spacer(modifier = Modifier.size(14.dp))
@@ -572,14 +493,12 @@ fun StreetFootballSelectedItemPreview() {
                     Text(
                         formatPriceEur(item.price),
                         style = MaterialTheme.typography.titleMedium,
-                        color = Color.Black
+                        color = Color.White
                     )
                     Spacer(modifier = Modifier.weight(10f))
                     Button(
-                        onClick = { },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.Black,
-                            contentColor = Color.White
+                        onClick = { }, colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFEF4444), contentColor = Color.White
                         )
                     ) {
                         Text("Buy with 1-click")

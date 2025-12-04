@@ -6,9 +6,10 @@ data class GameItem(
     val title: String,
     val description: String,
     val price: Double,
+    val game: Game? = null,
+    val purchase: Purchase? = null,
     val id: String? = null,
     val gameId: String? = null,
-    val sku: String? = null,
     val imageResId: Int? = null,
     val imageUrl: String? = null,
     val shortDescription: String? = null,
@@ -19,10 +20,8 @@ data class GameItem(
     val currency: String = "EUR",
     val originalPrice: Double? = null,
     val discountPercent: Int? = null,
-    val available: Boolean = true,
     val purchaseLimit: Int? = null,
     val owned: Boolean = false,
     val requiresLevel: Int? = null,
     val consumable: Boolean = true,
-) : Serializable {
-}
+) : Serializable

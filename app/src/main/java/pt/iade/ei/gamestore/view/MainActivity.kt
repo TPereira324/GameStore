@@ -19,18 +19,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Refresh
-import androidx.compose.material.icons.outlined.Star
-import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -96,20 +96,6 @@ private val bottomItems = listOf(
     BottomItem(Icons.Outlined.Refresh, "History"),
     BottomItem(Icons.Outlined.Person, "Profile")
 )
-
-@Composable
-fun GameStoreBottomBar(selectedIndex: Int, onSelectedIndexChange: (Int) -> Unit) {
-    NavigationBar(containerColor = Color(0xFFF2ECF7), contentColor = Color(0xFF444444)) {
-        bottomItems.forEachIndexed { index, item ->
-            NavigationBarItem(
-                selected = selectedIndex == index,
-                onClick = { onSelectedIndexChange(index) },
-                icon = { Icon(item.icon, contentDescription = null) },
-                label = { Text(item.label) }
-            )
-        }
-    }
-}
 
 @Composable
 fun TelaPrincipalScreen(games: List<Game>, onGameClick: (Game) -> Unit) {
@@ -199,6 +185,23 @@ fun SimpleGameBox(title: String, imageResId: Int, onClick: () -> Unit) {
     }
 }
 
+@Composable
+fun GameStoreBottomBar(selectedIndex: Int, onSelectedIndexChange: (Int) -> Unit) {
+    NavigationBar(containerColor = Color(0xFFFFFFFF), contentColor = Color(0xFFDC2626)) {
+        bottomItems.forEachIndexed { index, item ->
+            NavigationBarItem(
+                selected = selectedIndex == index,
+                onClick = { onSelectedIndexChange(index) },
+                icon = { Icon(item.icon, contentDescription = null) },
+                label = { Text(item.label) },
+                alwaysShowLabel = true,
+                colors = androidx.compose.material3.NavigationBarItemDefaults.colors(
+                    indicatorColor = Color(0xFFDC2626)
+                )
+            )
+        }
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
